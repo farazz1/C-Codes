@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> // For sort
+
+using namespace std;
+
+// Function to sort vector of strings in lexicographical order
+void sortStrings(vector<string> &strVector) {
+    sort(strVector.begin(), strVector.end());
+}
+
+int main() {
+    // Input vector of strings
+    vector<string> strVector = {"banana", "apple", "orange", "grape"};
+
+    // Sorting the vector of strings
+    sortStrings(strVector);
+
+    // Output the sorted vector
+    cout << "Sorted vector of strings: ";
+    for (const string& str : strVector) {
+        cout << str << " ";
+    }
+    cout << endl;
+
+    return 0;
+}

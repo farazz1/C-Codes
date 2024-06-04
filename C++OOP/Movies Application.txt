@@ -1,0 +1,123 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+class Movie {
+private:
+    string title;
+    int copies;
+    string producer;
+    string director;
+    string productionCompany;
+    double price;
+    int releaseYear;
+
+public:
+    Movie(string title, int copies, string producer, string director, string productionCompany, double price, int releaseYear)
+        : title(title), copies(copies), producer(producer), director(director), productionCompany(productionCompany), price(price), releaseYear(releaseYear) {}
+
+    string getTitle() const { return title; }
+    int getCopies() const { return copies; }
+    void rentMovie() { copies--; }
+    void returnMovie() { copies++; }
+
+    void displayDetails() const {
+        cout << "Title: " << title << endl;
+        cout << "Producer: " << producer << endl;
+        cout << "Director: " << director << endl;
+        cout << "Production Company: " << productionCompany << endl;
+        cout << "Price: " << price << endl;
+        cout << "Release Year: " << releaseYear << endl;
+    }
+};
+
+class Customer {
+private:
+    string firstName;
+    string lastName;
+    int accountNumber;
+    vector<Movie*> rentedMovies;
+
+public:
+    Customer(string firstName, string lastName, int accountNumber) : firstName(firstName), lastName(lastName), accountNumber(accountNumber) {}
+
+    void rentMovie(Movie* movie) {
+        rentedMovies.push_back(movie);
+        movie->rentMovie();
+    }
+
+    void returnMovie(Movie* movie) {
+        rentedMovies.erase(remove(rentedMovies.begin(), rentedMovies.end(), movie), rentedMovies.end());
+        movie->returnMovie();
+    }
+
+    void displayRentedMovies() const {
+        cout << "Rented Movies for " << firstName << " " << lastName << " (Account Number: " << accountNumber << "):" << endl;
+        for (Movie* movie : rentedMovies) {
+            cout << "- " << movie->getTitle() << endl;
+        }
+    }
+};
+
+class MovieStore {
+private:
+    unordered_map<string, vector<Movie*>> moviesByTitle;
+
+public:
+    void addMovie(Movie* movie) {
+        moviesByTitle[movie->getTitle()].push_back(movie);
+    }
+
+    void deleteMovie(Movie* movie) {
+        moviesByTitle[movie->getTitle()].erase(remove(moviesByTitle[movie->getTitle()].begin(), moviesByTitle[movie->getTitle()].end(), movie), moviesByTitle[movie->getTitle()].end());
+    }
+
+    void displayAllRentedMovies() const {
+        cout << "All Rented Movies:" << endl;
+        for (const auto& pair : moviesByTitle) {
+            for (Movie* movie : pair.second) {
+                if (movie->getCopies() < pair.second.size()) {
+                    movie->displayDetails();
+                }
+            }
+        }
+    }
+
+    Movie* findMovieByTitle(const string& title) const {
+        if (moviesByTitle.find(title) != moviesByTitle.end()) {
+            return moviesByTitle.at(title).front();
+        }
+        return nullptr;
+    }
+};
+
+int main() {
+    // Sample usage
+    MovieStore store;
+
+    // Adding movies
+    store.addMovie(new Movie("The Shawshank Redemption", 5, "Niki Marvin", "Frank Darabont", "Castle Rock Entertainment", 9.3, 1994));
+    store.addMovie(new Movie("The Godfather", 3, "Albert S. Ruddy", "Francis Ford Coppola", "Paramount Pictures", 9.2, 1972));
+
+    // Renting movies
+    Customer customer("John", "Doe", 1234);
+    Movie* shawshankRedemption = store.findMovieByTitle("The Shawshank Redemption");
+    if (shawshankRedemption) {
+        customer.rentMovie(shawshankRedemption);
+    }
+
+    // Displaying rented movies
+    customer.displayRentedMovies();
+
+    // Returning movies
+    customer.returnMovie(shawshankRedemption);
+
+    // Displaying all rented movies
+    store.displayAllRentedMovies();
+
+    return 0;
+}

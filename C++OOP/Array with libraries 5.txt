@@ -1,0 +1,55 @@
+#include <iostream>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
+
+const int SIZE = 10;
+
+void printArray(const int array[], const string& name) {
+    cout << name << " contains: ";
+    copy(array, array + SIZE, ostream_iterator<int>(cout, " "));
+    cout << endl;
+}
+
+int main() {
+    int a1[SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int a2[SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int a3[SIZE] = {1, 2, 3, 4, 1000, 6, 7, 8, 9, 10};
+    
+    // Task 1
+    printArray(a1, "a1");
+    printArray(a2, "a2");
+    printArray(a3, "a3");
+
+    // Task 2
+    if(equal(begin(a1), end(a1), begin(a2)))
+        cout << "a1 is equal to a2." << endl;
+    else
+        cout << "a1 is not equal to a2." << endl;
+
+    // Task 3
+    if(equal(begin(a1), end(a1), begin(a3)))
+        cout << "a1 is equal to a3." << endl;
+    else
+        cout << "a1 is not equal to a3." << endl;
+
+    // Task 4
+    auto mismatch_pair = mismatch(begin(a1), end(a1), begin(a3));
+    if(mismatch_pair.first != end(a1))
+        cout << "There is a mismatch between a1 and a3 at location " 
+             << distance(begin(a1), mismatch_pair.first)
+             << " where a1 contains " << *mismatch_pair.first 
+             << " and a3 contains " << *mismatch_pair.second << "." << endl;
+
+    // Task 5
+    const char c1[] = "HELLO";
+    const char c2[] = "BYE BYE";
+    //  Lexicographical comparison means comparing the arrays character by character based on their ASCII values.
+    if(lexicographical_compare(begin(c1), end(c1)-1, begin(c2), end(c2)-1))
+        cout << c1 << " is less than " << c2 << endl;
+    else
+        cout << c1 << " is not less than " << c2 << endl;
+
+    return 0;
+}

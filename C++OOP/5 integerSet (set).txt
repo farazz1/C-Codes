@@ -1,0 +1,47 @@
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+class IntegerSet {
+private:
+    set<int> integers;
+
+public:
+    void addInteger(int num) {
+        integers.insert(num);
+        cout << "Integer added successfully." << endl;
+    }
+
+    void removeInteger(int num) {
+        auto it = integers.find(num);
+        if (it != integers.end()) {
+            integers.erase(it);
+            cout << "Integer removed successfully." << endl;
+        } else {
+            cout << "Integer not found." << endl;
+        }
+    }
+
+    void displayIntegers() const {
+        cout << "Integers in the set:" << endl;
+        for (const auto& num : integers) {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    IntegerSet integerSet;
+    integerSet.addInteger(10);
+    integerSet.addInteger(5);
+    integerSet.addInteger(20);
+    integerSet.displayIntegers();
+
+    cout << "\nRemove integer:" << endl;
+    integerSet.removeInteger(5);
+    integerSet.displayIntegers();
+
+    return 0;
+}

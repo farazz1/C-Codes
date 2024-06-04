@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class GPA{
+    private:
+    string name;
+    int age;
+    int std_id;
+    string gender;
+    double prog_marks;
+    double marks;
+
+    public:
+    GPA(string n, int a, int id, string g, double pMarks, double rcMarks)
+        : name(n), age(a), std_id(id), gender(g), prog_marks(pMarks), marks(rcMarks) {}
+
+    char Grade(double percentage) {
+        if (percentage >= 90) return 'A';
+        else if (percentage >= 80) return 'B';
+        else if (percentage >= 70) return 'C';
+        else if (percentage >= 60) return 'D';
+        else return 'F';
+    }
+    double getGPA(){ return 4.0; } //sum of (credit*point) / total no of credits
+    double getCGPA(){ return 4.0; } //sum of gpa/ total number of semesters
+
+    void displayInformation() {
+        cout << "\nStudent Information:\n";
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Student ID: " << std_id << endl;
+        cout << "Gender: " << gender << endl;
+        cout<<"Your GPA is "<<getGPA()<<endl;
+        cout<<"Your cgpa is "<<getCGPA()<<endl;
+    }
+
+};
+
+int main() {
+    string name, gender;
+    int age, std_id;
+    double programmingMarks, remainingCoursesMarks;
+
+    cout << "Enter your name: ";
+    getline(cin, name);
+
+    cout << "Enter your age: ";
+    cin >> age;
+
+    cout << "Enter your student ID: ";
+    cin >> std_id;
+
+    cout << "Enter your gender: ";
+    cin >> gender;
+
+    cout << "Enter your marks in Programming Fundamentals: ";
+    cin >> programmingMarks;
+
+    cout << "Enter your marks in remaining courses: ";
+    cin >> remainingCoursesMarks;
+
+    GPA student(name, age, std_id, gender, programmingMarks, remainingCoursesMarks);
+    student.displayInformation();
+
+    return 0;
+}

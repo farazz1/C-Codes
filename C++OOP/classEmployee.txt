@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee{
+    private:
+    string first, last;
+    double salary;
+    public:
+    Employee(string f, string l, double s){
+        first = f;
+        last = l;
+        if(s<0){
+            salary = 0.0;
+        }
+        else{
+            salary = s;
+        }
+    }
+    string getFirstName(){
+        return first;
+    }
+    string getLastName(){
+        return last;
+    }
+    double getMonthlySalary(){
+        return salary;
+    }
+    double getYearlySalary(){
+        return salary*12;
+    }
+    void giveRaise(){
+        salary *= 1.1;
+    }
+};
+
+int main() {
+    Employee employee1("John", "Doe", 5000);
+    Employee employee2("Jane", "Smith", 6000);
+
+    cout << "Yearly salary for " << employee1.getFirstName() << " " << employee1.getLastName() << ": $" << employee1.getYearlySalary() << endl;
+    cout << "Yearly salary for " << employee2.getFirstName() << " " << employee2.getLastName() << ": $" << employee2.getYearlySalary() << endl;
+
+    employee1.giveRaise();
+    employee2.giveRaise();
+
+    cout << "After a 10% raise:" << endl;
+    cout << "Yearly salary for " << employee1.getFirstName() << " " << employee1.getLastName() << ": $" << employee1.getYearlySalary() << endl;
+    cout << "Yearly salary for " << employee2.getFirstName() << " " << employee2.getLastName() << ": $" << employee2.getYearlySalary() << endl;
+
+    return 0;
+}

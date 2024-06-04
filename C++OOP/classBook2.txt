@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Book {
+private:
+    string bookName;
+    string ISBN;
+    string authorName;
+    string publisher;
+
+public:
+    // Constructors
+    Book() {}
+    Book(const string& bookName, const string& ISBN, const string& authorName, const string& publisher) {
+        setBookName(bookName);
+        setISBN(ISBN);
+        setAuthorName(authorName);
+        setPublisher(publisher);
+    }
+
+    // Accessor methods
+    string getBookName() const {
+        return bookName;
+    }
+
+    string getISBN() const {
+        return ISBN;
+    }
+
+    string getAuthorName() const {
+        return authorName;
+    }
+
+    string getPublisher() const {
+        return publisher;
+    }
+
+    // Mutator methods
+    void setBookName(const string& name) {
+        bookName = name;
+    }
+
+    void setISBN(const string& isbn) {
+        ISBN = isbn;
+    }
+
+    void setAuthorName(const string& author) {
+        authorName = author;
+    }
+
+    void setPublisher(const string& pub) {
+        publisher = pub;
+    }
+
+    // Method to get book information
+    string getBookInfo() const {
+        return "Book Name: " + getBookName() + "\nISBN: " + getISBN() +
+               "\nAuthor Name: " + getAuthorName() + "\nPublisher: " + getPublisher();
+    }
+};
+
+int main() {
+    // Create an array of Book objects
+    Book books[5];
+
+    // Set information for each book using mutator methods
+    books[0].setBookName("The Catcher in the Rye");
+    books[0].setISBN("978-0-316-76948-0");
+    books[0].setAuthorName("J.D. Salinger");
+    books[0].setPublisher("Little, Brown and Company");
+
+    books[1].setBookName("To Kill a Mockingbird");
+    books[1].setISBN("978-0-06-112008-4");
+    books[1].setAuthorName("Harper Lee");
+    books[1].setPublisher("J.B. Lippincott & Co.");
+
+    // Display book information using accessor methods
+    for (int i = 0; i < 2; i++) {
+        cout << "Book " << (i + 1) << " Information:\n" << books[i].getBookInfo() << "\n\n";
+    }
+
+    return 0;
+}

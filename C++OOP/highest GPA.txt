@@ -1,0 +1,40 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+    ifstream inputFile("input.txt"); 
+
+    if (!inputFile.is_open()) {
+        cerr << "Error opening file." << endl;
+        return 1;
+    }
+
+    double maxGPA = 0.0;
+    string recipientNames;
+    
+    string line;
+    while (getline(inputFile, line)) {
+        istringstream iss(line);
+        double gpa;
+        string name;
+        
+        iss >> gpa >> name; // Read GPA and name directly
+         
+        if (gpa > maxGPA) {
+            maxGPA = gpa;
+            recipientNames = name;
+        } else if (gpa == maxGPA) {
+            recipientNames += " and " + name;
+        }
+    }
+    inputFile.close();
+
+    cout << "The highest GPA is " << fixed << setprecision(1) << maxGPA << " and the recipient student(s) is/are: ";
+    cout << recipientNames << endl;
+
+    return 0;
+}

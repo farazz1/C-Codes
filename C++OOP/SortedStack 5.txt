@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class ArrayStack {
+private:
+    static const int DEFAULT_CAPACITY = 10;
+    vector<int> stackArray;
+    int top;
+
+public:
+    ArrayStack() : stackArray(DEFAULT_CAPACITY), top(-1) {}
+
+    void push(int value) {
+        if (top == stackArray.size() - 1) {
+            stackArray.resize(stackArray.size() * 2);
+        }
+        stackArray[++top] = value;
+    }
+
+    void pop() {
+        if (!isEmpty()) {
+            --top;
+        }
+    }
+
+    int peek() const {
+        if (!isEmpty()) {
+            return stackArray[top];
+        }
+        return -1;
+    }
+
+    bool isEmpty() const {
+        return top == -1;
+    }
+};
+
+class SortedStack : public ArrayStack {
+public:
+    void push(int value) {
+        if (isEmpty() || value >= peek()) {
+            ArrayStack::push(value);
+        } else {
+            ArrayStack tempStack;
+            while (!isEmpty() && value < peek()) {
+                tempStack.push(ArrayStack::peek());
+                ArrayStack::pop();
+            }
+            ArrayStack::push(value);
+            while (!tempStack.isEmpty()) {
+                ArrayStack::push(tempStack.peek());
+                tempStack.pop();
+            }
+        }
+    }
+};
+
+int main() {
+    SortedStack sortedStack;
+
+    sortedStack.push(42);
+    sortedStack.push(27);
+    sortedStack.push(39);
+    sortedStack.push(3);
+    sortedStack.push(55);
+    sortedStack.push(81);
+    sortedStack.push(11);
+    sortedStack.push(9);
+    sortedStack.push(0);
+    sortedStack.push(72);
+
+    while (!sortedStack.isEmpty()) {
+        cout << sortedStack.peek() << " ";
+        sortedStack.pop();
+    }
+
+    return 0;
+}

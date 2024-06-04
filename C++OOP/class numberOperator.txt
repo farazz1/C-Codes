@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+class NumberOperator {
+private:
+    double value;
+
+public:
+    NumberOperator(double initialValue) : value(initialValue) {}
+
+    NumberOperator operator--() {
+        value *= 4;
+        return *this;
+    }
+
+    NumberOperator operator--(int) {
+        NumberOperator temp = *this;
+        value /= 4;
+        return temp;
+    }
+
+    double getValue() const {
+        return value;
+    }
+};
+
+int main() {
+    NumberOperator num(10.0);
+
+    --num;
+    cout << "After prefix decrement: " << num.getValue() <<endl;
+    
+    num--;
+    cout << "After postfix decrement: " << num.getValue() <<endl;
+
+    return 0;
+}

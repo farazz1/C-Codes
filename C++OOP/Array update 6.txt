@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void printArray(const vector<int>& arr, const string& label) {
+    cout << label << ": ";
+    for (int num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
+void removeValue(vector<int>& arr, int value) {
+    arr.erase(remove(arr.begin(), arr.end(), value), arr.end());
+}
+
+void copyWithoutValue(const vector<int>& source, vector<int>& dest, int value) {
+    dest.clear();
+    for (int num : source) {
+        if (num != value) {
+            dest.push_back(num);
+        }
+    }
+}
+
+void removeGreater(vector<int>& arr, int threshold) {
+    arr.erase(remove_if(arr.begin(), arr.end(), [threshold](int num) { return num > threshold; }), arr.end());
+}
+
+void copyWithoutGreater(const vector<int>& source, vector<int>& dest, int threshold) {
+    dest.clear();
+    for (int num : source) {
+        if (num <= threshold) {
+            dest.push_back(num);
+        }
+    }
+}
+
+int main() {
+    vector<int> a1 = {10, 2, 10, 4, 16, 6, 14, 8, 12, 10};
+    vector<int> a2 = a1;
+    vector<int> a3 = a1;
+    vector<int> a4 = a1;
+    
+    printArray(a1, "a1 before removing all 10s");
+    removeValue(a1, 10);
+    printArray(a1, "a1 after removing all 10s");
+
+    printArray(a2, "a2 before removing all 10s and copying");
+    vector<int> c(a2.size());
+    copyWithoutValue(a2, c, 10);
+    printArray(c, "c after removing all 10s from a2");
+
+    printArray(a3, "a3 before removing all elements greater than 9");
+    removeGreater(a3, 9);
+    printArray(a3, "a3 after removing all elements greater than 9");
+
+    printArray(a4, "a4 before removing all elements greater than 9 and copying");
+    vector<int> c2(a4.size());
+    copyWithoutGreater(a4, c2, 9);
+    printArray(c2, "c2 after removing all elements greater than 9 from a4");
+
+    return 0;
+}
+
+// Remove all occurrences of the number 10 from the array (a1):
+// We start with an array named a1 which contains integers, including some occurrences of the number 10.
+// The task is to remove all occurrences of the number 10 from this array.
+// Copy all elements from another array (a2) to a new array, removing all occurrences of the number 10 in the process:
+// We have another array named a2, which is initially identical to a1.
+// We need to create a new array (let's call it c) containing all the elements from a2, but without any occurrences of the number 10.
+// The original array a2 should remain unchanged.
+// Remove all elements greater than 9 from the array (a3):
+// We start with another array named a3 which contains integers, including some numbers greater than 9.
+// The task is to remove all elements greater than 9 from this array.
+// Copy all elements from another array (a4) to a new array, removing all elements greater than 9 in the process:
+// We have yet another array named a4, which is initially identical to a3.
+// Similar to step 2, we need to create a new array (let's call it c2) containing all the elements from a4, but excluding any elements greater than 9.
+// The original array a4 should remain unchanged

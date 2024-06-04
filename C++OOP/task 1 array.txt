@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+// Function to calculate sum of elements within a given range
+int sumInRange(const int arr[], int size, int start, int end) {
+    int sum = 0;
+    for (int i = start; i <= end; ++i) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int start = 2;
+    int end = 6;
+
+    // Calculate and display the size of the given range
+    int rangeSize = end - start + 1;
+    cout << "Size of the range: " << rangeSize << endl;
+
+    // Calculate and display the sum of all elements in the range
+    int sum = sumInRange(arr, size, start, end);
+    cout << "Sum of elements in the range: " << sum << endl;
+
+    // Check and display whether the range is empty
+    bool isEmpty = (rangeSize == 0);
+    cout << "Is the range empty? " << (isEmpty ? "Yes" : "No") << endl;
+
+    // Display the first element of the range
+    cout << "First element of the range: " << arr[start] << endl;
+
+    // Display the last element of the range
+    cout << "Last element of the range: " << arr[end] << endl;
+
+    return 0;
+}

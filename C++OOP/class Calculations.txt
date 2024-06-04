@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+class Calculations {
+protected:
+    double side;
+    double radius;
+    double height;
+    double length;
+    double breadth;
+
+public:
+    Calculations(double s, double r, double h, double l, double b)
+        : side(s), radius(r), height(h), length(l), breadth(b) {}
+};
+
+class cube : public Calculations {
+public:
+    cube(double s) : Calculations(s, 0, 0, 0, 0) {}
+
+    double getArea() {
+        return side * side * side;
+    }
+};
+
+class Cylinder : public Calculations {
+public:
+    Cylinder(double r, double h) : Calculations(0, r, h, 0, 0) {}
+
+    double getArea() {
+        return 3.14 * radius * radius * height;
+    }
+};
+
+class Box : public Calculations {
+public:
+    Box(double l, double b, double h) : Calculations(0, 0, h, l, b) {}
+
+    double getArea() {
+        return length * breadth * height;
+    }
+};
+
+int main() {
+    Calculations obj(5, 5, 5, 5, 5);
+    cube obj1(5);
+    Cylinder obj2(5, 5);
+    Box obj3(5, 5, 5);
+
+    cout << "Volume of Cube: " << obj1.getArea() << endl;
+    cout << "Volume of Cylinder: " << obj2.getArea() << endl;
+    cout << "Volume of Box: " << obj3.getArea() << endl;
+
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+
+using namespace std;
+
+void process(int x) {
+    if (x == 1) {
+        throw 1; // Throw int exception
+    } else if (x == 2) {
+        throw "yikes"; // Throw const char* exception
+    }
+    // Otherwise, do nothing
+}
+
+int main() {
+    vector<int> numbers = {0, 1, 2, 3};
+
+    for (int x : numbers) {
+        try {
+            process(x);
+            cout << "okay\n";
+        } catch (int& ex) {
+            cout << "Caught an int exception with value: " << ex << endl;
+        } catch (const char* ex) {
+            cout << "Caught a const char* exception with value: " << ex << endl;
+        }
+    }
+
+    return 0;
+}

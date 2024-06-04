@@ -1,0 +1,56 @@
+#include <iostream>
+#include <map>
+#include <unordered_map>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N; // Input the number of students
+
+    // Define maps to store student information
+    map<string, map<string, int>> studentScoresMap;
+    unordered_map<string, unordered_map<string, int>> studentScoresUnorderedMap;
+
+    // Input student names and their scores for each subject
+    for (int i = 0; i < N; ++i) {
+        string name;
+        cin >> name;
+        int M;
+        cin >> M; // Input the number of subjects
+        map<string, int> subjectScoresMap;
+        unordered_map<string, int> subjectScoresUnorderedMap;
+        for (int j = 0; j < M; ++j) {
+            string subject;
+            int score;
+            cin >> subject >> score;
+            subjectScoresMap[subject] = score; // Store subject name and score in map
+            subjectScoresUnorderedMap[subject] = score; // Store subject name and score in unordered_map
+        }
+        studentScoresMap[name] = subjectScoresMap; // Store student name and subject scores in map
+        studentScoresUnorderedMap[name] = subjectScoresUnorderedMap; // Store student name and subject scores in unordered_map
+    }
+
+    // Display student names along with their total scores using std::map
+    cout << "Using std::map:" << endl;
+    for (const auto& student : studentScoresMap) {
+        int totalScore = 0;
+        for (const auto& subject : student.second) {
+            totalScore += subject.second;
+        }
+        cout << student.first << ": " << totalScore << endl;
+    }
+
+    // Display student names along with their total scores using std::unordered_map
+    cout << "\nUsing std::unordered_map:" << endl;
+    for (const auto& student : studentScoresUnorderedMap) {
+        int totalScore = 0;
+        for (const auto& subject : student.second) {
+            totalScore += subject.second;
+        }
+        cout << student.first << ": " << totalScore << endl;
+    }
+
+    return 0;
+}

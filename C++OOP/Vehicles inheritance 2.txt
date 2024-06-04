@@ -1,0 +1,86 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Vehicles{
+    protected:
+    double price;
+
+    public:
+    Vehicles() : price(0.0) {}
+
+    Vehicles(double p){
+        price = p;
+    }
+};
+class Car: public Vehicles{
+    protected:
+    int seating;
+    int doors;
+    string fuel;
+
+    public:
+    Car() : Vehicles(), seating(0), doors(0), fuel(" ") {}
+
+    Car(int s,int d, string f){
+        seating = s;
+        doors = d;
+        fuel = f;
+    }
+
+};
+class Motorcycle: public Vehicles{
+    protected:
+    int cylinders;
+    int gear;
+    int wheels;
+
+    public:
+    Motorcycle() : Vehicles(), cylinders(0), gear(0), wheels(0) {}
+
+    Motorcycle(int c, int g, int w){
+        cylinders = c;
+        gear = g;
+        wheels = w;
+    }
+};
+class Audi: public Car{
+    public:
+    int model;
+
+    Audi(int m) : Car(), model(m) {}
+
+    void Display(){
+        cout<<"the price is: "<<price<<endl;
+        cout<<"the model is: "<< model << endl;
+        cout<<"seating: "<<seating<<endl;
+        cout<<"Doors: "<< doors<<endl;
+        cout<<"fuel: "<<fuel<<endl;
+
+    }
+};
+class Yamaha:public Motorcycle{
+    public:
+    int make;
+    Yamaha(int m) : Motorcycle(), make(m) {}
+
+    void Display(){
+        cout<<"the price is: "<<price<<endl;
+        cout<<"the model is: "<< make << endl;
+        cout<<"cylinders: "<<cylinders<<endl;
+        cout<<"gear: "<< gear<<endl;
+        cout<<"wheel: "<<wheels<<endl;
+    }
+};
+
+int main(){
+
+    Audi audiCar(2022);
+    audiCar.Display();
+    cout << endl;
+
+    Yamaha yamahaBike(2022);
+    yamahaBike.Display();
+
+    return 0;
+}

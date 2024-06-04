@@ -1,0 +1,41 @@
+#include <iostream>
+#include <stdexcept>
+#include <random>
+
+class CurveBall : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "CurveBall Exception";
+    }
+};
+
+void throwCurveBall() {
+    // Generate a random number between 0 (inclusive) and 100 (exclusive)
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 99);
+    int randomNumber = dis(gen);
+
+    // Throw CurveBall exception approximately 25% of the time
+    if (randomNumber < 25) {
+        throw CurveBall();
+    }
+}
+
+int main() {
+    int exceptionCount = 0;
+
+    // Call throwCurveBall function 1,000 times
+    for (int i = 0; i < 1000; ++i) {
+        try {
+            throwCurveBall();
+        } catch (CurveBall& ex) {
+            ++exceptionCount;
+        }
+    }
+
+    // Print the final count of exceptions thrown
+    std::cout << "Number of times CurveBall exception was thrown: " << exceptionCount << std::endl;
+
+    return 0;
+}

@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class FacilityRental {
+public:
+    string facilityType;
+    string availabilityStatus;
+    int rentalDuration;
+
+    FacilityRental(string type, string status, int duration)
+        : facilityType(type), availabilityStatus(status), rentalDuration(duration) {}
+
+    void reserveFacility() {
+        cout << "Facility reserved for " << rentalDuration << " days." << endl;
+    }
+};
+
+class FittingRoomRental : public FacilityRental {
+public:
+    string roomSize;
+    int numberOfCustomers;
+
+    FittingRoomRental(string type, string status, int duration, string size, int customers)
+        : FacilityRental(type, status, duration), roomSize(size), numberOfCustomers(customers) {}
+
+    void provideFittingExperience() {
+        cout << "Enjoy your fitting experience in a " << roomSize << " fitting room." << endl;
+    }
+};
+
+int main() {
+    FittingRoomRental fittingRoom("Fitting Room", "Available", 7, "Medium", 2);
+
+    fittingRoom.reserveFacility();
+    fittingRoom.provideFittingExperience();
+
+    return 0;
+}

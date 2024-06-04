@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+class Pair{
+    public:
+    int a,b;
+    Pair(){
+        a=0;
+        b=0;
+    }
+    void setA(int A){
+        a = A;
+    }
+    void setB(int B){
+        b = B;
+    }
+    int sum(){
+        return a + b;
+    }
+};
+
+int main() {
+    Pair obj;
+    obj.setA(5);
+    obj.setB(5);
+    cout<<"the sum is "<<obj.sum();
+
+    return 0;
+}

@@ -1,0 +1,27 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N; // Input the number of students
+
+    map<string, int> studentScores; // Map to store student names and scores
+
+    // Input student names and scores
+    for (int i = 0; i < N; ++i) {
+        string name;
+        int score;
+        cin >> name >> score;
+        studentScores[name] = score; // Store name and score in the map
+    }
+
+    // Display student names along with their scores in ascending order of scores
+    for (const auto& pair : studentScores) {
+        cout << pair.first << " " << pair.second << endl;
+    }
+
+    return 0;
+}

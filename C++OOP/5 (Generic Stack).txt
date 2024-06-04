@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+template <typename T>
+class Stack {
+private:
+    vector<T> elements;
+public:
+    Stack() {}
+
+    void push(const T& v) {
+        elements.push_back(v);
+    }
+
+    void pop() {
+        if (!elements.empty()) {
+            elements.pop_back();
+        } else {
+            cout << "Stack is empty!" << endl;
+        }
+    }
+
+    void display() {
+        if (elements.empty()) {
+            cout << "Stack is empty!" << endl;
+        } else {
+            for (const auto& element : elements) {
+                cout << element << endl;
+            }
+        }
+    }
+
+    void printTop() {
+        if (!elements.empty()) {
+            cout << "The topmost element is " << elements.back() << endl;
+        } else {
+            cout << "Stack is empty!" << endl;
+        }
+    }
+};
+
+int main() {
+    Stack<int> obj;
+    obj.push(2);
+    obj.push(3);
+    obj.push(4);
+    obj.pop();
+    obj.display();
+
+    return 0;
+}

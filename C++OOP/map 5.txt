@@ -1,0 +1,44 @@
+#include <iostream>
+#include <map>
+#include <unordered_map>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N; // Input the number of products
+
+    // Define maps to store product information
+    map<int, float> productPricesMap;
+    unordered_map<int, float> productPricesUnorderedMap;
+
+    // Input product IDs and prices
+    for (int i = 0; i < N; ++i) {
+        int productId;
+        float price;
+        cin >> productId >> price;
+        productPricesMap[productId] = price; // Store product ID and price in map
+        productPricesUnorderedMap[productId] = price; // Store product ID and price in unordered_map
+    }
+
+    // Simulate a price change
+    int productId;
+    float newPrice;
+    cin >> productId >> newPrice;
+    productPricesMap[productId] = newPrice; // Update price in map
+    productPricesUnorderedMap[productId] = newPrice; // Update price in unordered_map
+
+    // Display prices of all products in ascending order of product IDs using std::map
+    cout << "Using std::map:" << endl;
+    for (const auto& product : productPricesMap) {
+        cout << "Product ID: " << product.first << ", Price: " << product.second << endl;
+    }
+
+    // Display prices of all products in any order using std::unordered_map
+    cout << "\nUsing std::unordered_map:" << endl;
+    for (const auto& product : productPricesUnorderedMap) {
+        cout << "Product ID: " << product.first << ", Price: " << product.second << endl;
+    }
+
+    return 0;
+}

@@ -1,0 +1,62 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Book {
+protected:
+    string genre;
+
+public:
+    Book(const string& genre) : genre(genre) {}
+
+    virtual void displayDetails() const {
+        cout << "Genre: " << genre << endl;
+    }
+};
+
+class Novel : public Book {
+private:
+    string title;
+    string author;
+
+public:
+    Novel(const string& genre, const string& title, const string& author)
+        : Book(genre), title(title), author(author) {}
+
+    void displayDetails() const override {
+        Book::displayDetails();
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+    }
+};
+
+class Mystery : public Book {
+private:
+    string title;
+    string author;
+
+public:
+    Mystery(const string& genre, const string& title, const string& author)
+        : Book(genre), title(title), author(author) {}
+
+    void displayDetails() const override {
+        Book::displayDetails();
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+    }
+};
+
+int main() {
+    Novel novel("Novel", "The Great Gatsby", "F. Scott Fitzgerald");
+    Mystery mystery("Mystery", "The Hound of the Baskervilles", "Arthur Conan Doyle");
+
+    cout << "Details of Novel:" << endl;
+    novel.displayDetails();
+    cout << endl;
+
+    cout << "Details of Mystery:" << endl;
+    mystery.displayDetails();
+
+    return 0;
+}

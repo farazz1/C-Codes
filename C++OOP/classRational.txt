@@ -1,0 +1,113 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+class Rational {
+    private:
+    int num, den;
+    public:
+    // default constructor
+    Rational() : num {0}, den {1} { /* empty */ }
+    Rational(int n) : num {n}, den {1} { /* empty */ }
+    Rational(int n, int d) : num {n}, den {d} { /* empty */ }
+    // copy constructor
+    Rational(const Rational& r) : num {r.num}, den {r.den} { /* empty */ }
+
+    void Fraction(string s){
+        num = stoi(s.substr(0, s.find('/')));
+        den = stoi(s.substr(s.find('/') + 1));
+    }
+    void Float(float f){
+
+    }
+    int get_num()const{
+        return num;
+    }
+    int get_den()const{
+        return den;
+    }
+    void set_num(int n){
+        num = n;
+    }
+    void set_den(int d){
+        den = d;
+    }
+    string to_string()const{
+        return std::to_string(num) + "/" + std::to_string(den);
+    }
+    void reduce(){
+        for(int i=1;i<10;i++){
+            if(num%i == 0 && den%i == 0){
+                num = num/i;
+                den = den/i;
+                break;
+            }
+        }
+    }
+
+    Rational operator+(const Rational &r) const {
+        Rational result;
+        result.num = num * r.den + r.num * den;
+        result.den = den * r.den;
+        result.reduce();
+        return result;
+    }
+
+    Rational operator-(const Rational &r) const {
+        Rational result;
+        result.num = num * r.den - r.num * den;
+        result.den = den * r.den;
+        result.reduce();
+        return result;
+    }
+
+    Rational operator*(const Rational &r) const {
+        Rational result;
+        result.num = num * r.num;
+        result.den = den * r.den;
+        result.reduce();
+        return result;
+    }
+
+    Rational operator/(const Rational &r) const {
+        Rational result;
+        result.num = num * r.den;
+        result.den = den * r.num;
+        result.reduce();
+        return result;
+    }
+
+    bool operator==(const Rational &r) const {
+        return num * r.den == r.num * den;
+    }
+
+    bool operator!=(const Rational &r) const {
+        return !(*this == r);
+    }
+
+};
+
+int main() {
+    // Test your Rational class here
+    Rational a(1, 2);
+    Rational b(2, 3);
+
+    Rational sum = a + b;
+    Rational difference = a - b;
+    Rational product = a * b;
+    Rational quotient = a / b;
+
+    cout << "a + b = " << sum.to_string() << endl;
+    cout << "a - b = " << difference.to_string() << endl;
+    cout << "a * b = " << product.to_string() << endl;
+    cout << "a / b = " << quotient.to_string() << endl;
+
+    if (a == b) {
+        cout << "a is equal to b." << endl;
+    } else {
+        cout << "a is not equal to b." << endl;
+    }
+
+    return 0;
+}

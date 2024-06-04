@@ -1,0 +1,89 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class BankAccount {
+protected:
+    string accountNumber;
+    string ownerName;
+    double balance;
+
+public:
+    BankAccount(const string& accNum, const string& owner, double bal)
+        : accountNumber(accNum), ownerName(owner), balance(bal) {}
+
+    virtual void deposit(double amount) {
+        balance += amount;
+        cout << "Deposit of $" << amount << " successful.\n";
+    }
+
+    virtual void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            cout << "Withdrawal of $" << amount << " successful.\n";
+        } else {
+            cout << "Insufficient funds!\n";
+        }
+    }
+
+    virtual void displayBalance() const {
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Owner's Name: " << ownerName << endl;
+        cout << "Balance: $" << balance << endl;
+    }
+
+    virtual ~BankAccount() {}
+};
+
+class SavingsAccount : public BankAccount {
+private:
+    double interestRate;
+
+public:
+    SavingsAccount(const string& accNum, const string& owner, double bal, double rate)
+        : BankAccount(accNum, owner, bal), interestRate(rate) {}
+
+    void applyInterest() {
+        balance *= (1 + interestRate / 100);
+        cout << "Interest applied.\n";
+    }
+};
+
+class CheckingAccount : public BankAccount {
+public:
+    CheckingAccount(const string& accNum, const string& owner, double bal)
+        : BankAccount(accNum, owner, bal) {}
+};
+
+class CertificateOfDeposit : public BankAccount {
+private:
+    int term; 
+
+public:
+    CertificateOfDeposit(const string& accNum, const string& owner, double bal, int t)
+        : BankAccount(accNum, owner, bal), term(t) {}
+
+    void withdraw(double amount) override {
+        cout << "Withdrawal from Certificate of Deposit not allowed!\n";
+    }
+};
+
+int main() {
+    
+    SavingsAccount savings("SAV001", "John Doe", 1000, 5.0);
+    CheckingAccount checking("CHK001", "Jane Smith", 2000);
+    CertificateOfDeposit cd("CD001", "Alice Johnson", 5000, 12);
+
+    savings.deposit(100);
+    savings.applyInterest();
+    savings.displayBalance();
+
+    checking.withdraw(500);
+    checking.displayBalance();
+
+    cd.withdraw(1000);
+    cd.displayBalance();
+
+    return 0;
+}

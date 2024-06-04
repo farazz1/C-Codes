@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+class Football{
+    private:
+    double side;
+    public:  
+    Football();
+    Football(double s){
+        side = s;
+    }
+    double getArea(){
+        return side*side;
+    }
+};
+class Cricket{
+    private:
+    double length;
+    double width;
+    public:
+    Cricket();
+    Cricket(double v){
+        length = 2*v;
+        width = v;
+    }
+    double getArea(){
+        return length*width;
+    }
+};
+class Robot{
+    private:
+    double radius;
+    public:
+    Robot();
+    Robot(double s){
+        radius = s;
+    }
+    double getArea(){
+        return (22.0/7.0)*radius*radius;
+    }
+};
+
+int main(){
+    double userSide;
+    cout << "Enter the side length of the football ground: ";
+    cin >> userSide;
+
+    Football footballGround(userSide);
+    Cricket cricketGround(userSide);
+    Robot robotPlayGround(userSide);
+
+    cout << "Football Ground Area: " << footballGround.getArea() << endl;
+    cout << "Cricket Ground Area: " << cricketGround.getArea() << endl;
+    cout << "Robot Play Ground Area: " << robotPlayGround.getArea() << endl;
+
+    return 0;
+}

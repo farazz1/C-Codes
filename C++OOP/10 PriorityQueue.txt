@@ -1,0 +1,50 @@
+#include <iostream>
+#include <queue>
+#include <functional>
+
+
+struct MyPriorityFunction {
+
+    template<typename T>
+    bool operator()(const T& a, const T& b) const {
+        return a < b;
+    }
+};
+
+using namespace std;
+
+
+template <typename T, typename PriorityFunc = std::less<T>>
+class PriorityQueue {
+public:
+    void insert(const T& element) {
+        pq.push(element);
+    }
+
+    T getHighestPriority() {
+        if (pq.empty()) {
+            throw std::out_of_range("PriorityQueue is empty");
+        }
+        T highestPriorityElement = pq.top();
+        pq.pop();
+        return highestPriorityElement;
+    }
+
+private:
+    std::priority_queue<T, std::vector<T>, PriorityFunc> pq;
+};
+
+int main() {
+    PriorityQueue<int, MyPriorityFunction> pq;
+    
+    pq.insert(10);
+    pq.insert(30);
+    pq.insert(20);
+    
+
+    int highestPriorityElement = pq.getHighestPriority();
+    cout << "Highest priority element: " << highestPriorityElement << endl;
+    
+
+    return 0;
+}

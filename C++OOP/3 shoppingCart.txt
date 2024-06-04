@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class ShoppingCart {
+private:
+    vector<string> cart;
+
+public:
+    ShoppingCart() {}
+
+    void addItem(const string& item) {
+        cart.push_back(item);  // Use push_back() to add items to the end of the vector
+    }
+
+    void removeItem(const string& item) {
+        auto it = find(cart.begin(), cart.end(), item); // Find the item in the vector
+        if (it != cart.end()) { // If item found
+            cart.erase(it); // Erase the item from the vector
+            cout << "Item " << item << " removed from the vector." << endl;
+        } else {
+            cout << "Item " << item << " not found in the vector." << endl;
+        }
+    }
+
+    void displayCart() {
+        cout << "Items in the cart: ";
+        for (const string& item : cart) {
+            cout << item << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    ShoppingCart obj;
+    int option = 0;
+    string item;
+    cout << "Welcome to the Shopping Cart program!" << endl;
+
+    while (option != 4) {
+        cout << "1. Add item to cart \n"
+             << "2. Remove item from cart \n"
+             << "3. View cart \n"
+             << "4. Exit \n"
+             << endl;
+        cin >> option;
+
+        if (option == 1) {
+            cout << "item name? " << endl;
+            cin >> item;
+
+            obj.addItem(item);
+        } else if (option == 2) {
+            cout << "item to remove? " << endl;
+            cin >> item;
+            obj.removeItem(item);
+        } else if (option == 3) {
+            obj.displayCart();
+        } else {
+            cout << "Thank you for shopping!" << endl;
+        }
+    }
+
+    return 0;
+}

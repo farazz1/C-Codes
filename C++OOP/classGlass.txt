@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+class Glass {
+public:
+    int LiquidLevel;
+
+    Glass() : LiquidLevel(200) {}
+
+    void Drink(int milliliters) {
+        LiquidLevel -= milliliters;
+        if (LiquidLevel < 100) {
+            Refill();
+        }
+    }
+
+    void Refill() {
+        LiquidLevel = 200;
+        cout << "Glass refilled to 200 ml." << endl;
+    }
+};
+
+int main() {
+    Glass glass;
+
+    while (true) {
+        cout << "Enter the amount of liquid drank (0 to exit): ";
+        int milliliters;
+        cin >> milliliters;
+
+        if (milliliters == 0) {
+            break;
+        }
+
+        glass.Drink(milliliters);
+        cout << "Glass liquid level: " << glass.LiquidLevel << " ml" << endl;
+    }
+
+    return 0;
+}

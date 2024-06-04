@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void displayArray(const vector<int>& arr, const string& label) {
+    cout << label << ": ";
+    for (int num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Input arrays
+    vector<int> a1 = {1, 2, 3, 4, 5};
+    vector<int> a2 = {3, 4, 5, 6, 7};
+
+    // Step 1: Display elements of a1 and a2
+    displayArray(a1, "a1");
+    displayArray(a2, "a2");
+
+    // Step 2: Copy elements from a1 to results using copy_backward
+    vector<int> results(a1.size() + a2.size());
+    copy_backward(a1.begin(), a1.end(), results.end());
+
+    // Step 3: Merge elements of a1 and a2 into results2
+    vector<int> results2;
+    results2.reserve(a1.size() + a2.size());
+    merge(a1.begin(), a1.end(), a2.begin(), a2.end(), back_inserter(results2));
+
+    // Step 4: Remove duplicates from results2
+    results2.erase(unique(results2.begin(), results2.end()), results2.end());
+
+    // Step 5: Reverse elements of a1 in-place
+    reverse(a1.begin(), a1.end());
+
+    // Display the resulting arrays after each operation
+    displayArray(results, "results after copy_backward");
+    displayArray(results2, "results2 after merging and removing duplicates");
+    displayArray(a1, "a1 after reversing in-place");
+
+    return 0;
+}

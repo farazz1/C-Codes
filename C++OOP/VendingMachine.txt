@@ -1,0 +1,127 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Vending {
+private:
+    struct MenuItem {
+        string name;
+        int price;
+        int quantity;
+    };
+    
+    string name;
+    MenuItem Menu[5]; 
+    string Orders[10];
+    int index{-1};
+
+public:
+    Vending() {
+        Menu[0] = {"pepsi", 80,10};
+        Menu[1] = {"chips", 30,10};
+        Menu[2] = {"cookies", 150,10};
+        Menu[3] = {"chocolate", 20,10};
+        Menu[4] = {"gum", 10,10};
+    }
+
+    void Display(){
+        cout<<"Welcome! "<<endl;
+        cout<<Menu[0].name<<" Rs."<<Menu[0].price<<endl;
+        cout<<Menu[1].name<<" Rs."<<Menu[1].price<<endl;
+        cout<<Menu[2].name<<" Rs."<<Menu[2].price<<endl;
+        cout<<Menu[3].name<<" Rs."<<Menu[3].price<<endl;
+        cout<<Menu[4].name<<" Rs."<<Menu[4].price<<endl;
+    }
+
+    void addOrder(string n) {
+        bool found = false;
+        for (int i = 0; i < 5; i++) {
+            if (Menu[i].name == n) {
+                found = true;
+                Menu[i].price--;
+                break;
+            }
+        }
+
+        if (found) {
+            Orders[index + 1] = n;
+            index++;
+        } else {
+            cout << "This item is currently unavailable!" << endl;
+        }
+    }
+
+    void fulfillOrder() {
+        if (index == -1) {
+            cout << "All orders have been fulfilled!" << endl;
+        } else {
+            cout << "The item is ready!" << endl;
+        }
+    }
+
+    void listOrders() {
+        for (int i = 0; i < index + 1; i++) {
+            cout << "You ordered: " << endl;
+            cout << Orders[i] << endl;
+        }
+    }
+
+    int dueAmount() {
+        int total = 0;
+        for (int i = 0; i < index + 1; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (Menu[j].name == Orders[i]) {
+                    total += Menu[j].price;
+                    break;
+                }
+            }
+        }
+        return total;
+    }
+
+    void payment(){
+        int amount;
+        cout<<"please enter the amount through the slot: "<<endl;
+        cin>>amount;
+        if(amount>=dueAmount()){
+            cout<<"heres the change!: "<<amount-dueAmount()<<endl;
+        }
+        else if(amount == dueAmount()){
+            cout<<"processed!: "<<endl;
+        }
+        else{
+            cout<<"input proper amount please!"<<endl;
+        }
+    }
+
+    void record(){
+        int total;
+        for(int i=0;i<5;i++){
+            if(Menu[i].quantity==0){
+                cout<<Menu[i].name<<" needs to be restocked!"<<endl;
+            }
+        }
+        total += dueAmount();
+    }
+
+};
+
+int main() {
+    Vending shop;
+    int cont = 0;
+    string item;
+    shop.Display();
+    while(cont == 0){
+        cout<<"enter your item name: "<<endl;
+        cin>>item;
+        shop.addOrder(item);
+        cout<<"1 to exit and 0 to add more!: "<<endl;
+        cin>>cont;
+    }
+    shop.listOrders();
+    cout << "Total Due Amount: $" << shop.dueAmount() << endl;
+    shop.payment();
+    shop.record();
+
+    return 0;
+}

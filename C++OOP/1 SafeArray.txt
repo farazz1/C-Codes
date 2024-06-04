@@ -1,0 +1,84 @@
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
+
+class SafeArray {
+private:
+    int *arr;
+    int sz;
+
+public:
+    // Constructor
+    SafeArray(int sz) {
+        this->sz = sz;
+        arr = new int[sz];
+        // Initialize array elements to 0
+        for (int i = 0; i < sz; ++i) {
+            arr[i] = 0;
+        }
+    }
+
+    // Copy constructor
+    SafeArray(const SafeArray& other) {
+        this->sz = other.sz;
+        arr = new int[sz];
+        for (int i = 0; i < sz; ++i) {
+            arr[i] = other.arr[i];
+        }
+    }
+
+    // Destructor
+    ~SafeArray() {
+        delete[] arr;
+    }
+
+    // Access element at index i
+    int& operator[](int i) {
+        if (i < 0 || i >= sz) {
+            throw out_of_range("Index out of range");
+        }
+        return arr[i];
+    }
+
+    // Get size of array
+    int size() {
+        return sz;
+    }
+
+    // Print elements of array
+    void print() {
+        for (int i = 0; i < sz; ++i) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    SafeArray a(5);
+    a[0] = 1;
+    a[1] = 2;
+    a[2] = 3;
+    a[3] = 4;
+    a[4] = 5;
+    a.print();
+    cout << "Size: " << a.size() << endl;
+
+    SafeArray b = a;
+    b.print();
+    cout << "Size: " << b.size() << endl;
+
+    b[0] = 10;
+    b.print();
+    cout << "Size: " << b.size() << endl;
+
+    try {
+        b[5] = 10;
+    }
+    catch (std::out_of_range& e) {
+        cout << "Caught an exception of type: " << e.what() << endl;
+    }
+
+    return 0;
+}

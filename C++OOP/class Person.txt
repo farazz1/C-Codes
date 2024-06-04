@@ -1,0 +1,105 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Person {
+protected:
+    int employeeID;
+
+public:
+    void getData() {
+        cout << "Enter Employee ID: ";
+        cin >> employeeID;
+    }
+
+    void displayData() const {
+        cout << "Employee ID: " << employeeID << endl;
+    }
+};
+
+class Admin : public Person {
+private:
+    string name;
+    double monthlyIncome;
+
+public:
+    void getData() {
+        Person::getData();
+        cout << "Enter Employee Name: ";
+        cin >> ws;
+        getline(cin, name);
+        cout << "Enter Monthly Income: ";
+        cin >> monthlyIncome;
+    }
+
+    void displayData() const {
+        Person::displayData();
+        cout << "Employee Name: " << name << endl;
+        cout << "Monthly Income: $" << monthlyIncome << endl;
+    }
+
+    double bonus() const {
+        return 0.05 * 12 * monthlyIncome;
+    }
+};
+
+class Accounts : public Person {
+private:
+    string name;
+    double monthlyIncome;
+
+public:
+    void getData() {
+        Person::getData();
+        cout << "Enter Employee Name: ";
+        cin >> ws;
+        getline(cin, name);
+        cout << "Enter Monthly Income: ";
+        cin >> monthlyIncome;
+    }
+
+    void displayData() const {
+        Person::displayData();
+        cout << "Employee Name: " << name << endl;
+        cout << "Monthly Income: $" << monthlyIncome << endl;
+    }
+
+    double bonus() const {
+        return 0.05 * 12 * monthlyIncome;
+    }
+};
+
+int main() {
+    const int numAdmins = 2;
+    const int numAccounts = 2;
+
+    Admin adminEmployees[numAdmins];
+    Accounts accountsEmployees[numAccounts];
+
+    cout << "Enter Admin Employees' Information:" << endl;
+    for (int i = 0; i < numAdmins; ++i) {
+        adminEmployees[i].getData();
+    }
+
+    cout << "Enter Accounts Employees' Information:" << endl;
+    for (int i = 0; i < numAccounts; ++i) {
+        accountsEmployees[i].getData();
+    }
+
+    cout << "\nEmployee Information and Bonus:" << endl;
+
+    for (int i = 0; i < numAdmins; ++i) {
+        adminEmployees[i].displayData();
+        cout << "Bonus: $" << adminEmployees[i].bonus() << endl;
+        cout << endl;
+    }
+
+    for (int i = 0; i < numAccounts; ++i) {
+        accountsEmployees[i].displayData();
+        cout << "Bonus: $" << accountsEmployees[i].bonus() << endl;
+        cout << endl;
+    }
+
+    return 0;
+}

@@ -1,0 +1,39 @@
+#include <iostream>
+#include <array>
+using namespace std;
+
+class Student{
+  private:
+  int Scores[5];
+  public:
+  Student(){
+      for(int i=0;i<5;i++){
+          Scores[i] = 0;
+      }
+  }
+  int n = 0;
+  void input(int a){
+      Scores[n] = a;
+      n++;
+  }
+  int calculateTotalScore(){
+      int total;
+      for(int i=0;i<5;i++){
+          total += Scores[i];
+      }
+      return total;
+  }
+};
+
+int main() {
+    int b;
+    Student a;
+    for(int i=0; i<5;i++){
+        cout<<"enter your number? "<<endl;
+        cin>>b;
+        a.input(b);
+    }
+    cout<<"The total scores are "<<a.calculateTotalScore();
+
+    return 0;
+}

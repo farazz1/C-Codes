@@ -1,0 +1,93 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class IntegerSet {
+private:
+    vector<bool> elements;
+
+public:
+    IntegerSet() : elements(101, false) {}
+
+    IntegerSet(const int arr[], int size) : elements(101, false) {
+        for (int i = 0; i < size; ++i) {
+            if (arr[i] >= 0 && arr[i] <= 100) {
+                elements[arr[i]] = true;
+            }
+        }
+    }
+
+    IntegerSet unionOfSets(const IntegerSet& other) const {
+        IntegerSet result;
+        for (int i = 0; i <= 100; ++i) {
+            result.elements[i] = elements[i] || other.elements[i];
+        }
+        return result;
+    }
+
+    IntegerSet intersectionOfSets(const IntegerSet& other) const {
+        IntegerSet result;
+        for (int i = 0; i <= 100; ++i) {
+            result.elements[i] = elements[i] && other.elements[i];
+        }
+        return result;
+    }
+
+    void insertElement(int k) {
+        if (k >= 0 && k <= 100) {
+            elements[k] = true;
+        }
+    }
+
+    void deleteElement(int m) {
+        if (m >= 0 && m <= 100) {
+            elements[m] = false;
+        }
+    }
+
+    string to_string() const {
+        string result;
+        for (int i = 0; i <= 100; ++i) {
+            if (elements[i]) {
+                result += std::to_string(i) + " ";
+            }
+        }
+        return result;
+    }
+
+    bool isEqualTo(const IntegerSet& other) const {
+        return elements == other.elements;
+    }
+};
+
+int main() {
+    IntegerSet set1;
+    IntegerSet set2;
+    IntegerSet set3;
+
+    set1.insertElement(5);
+    set1.insertElement(10);
+    set1.insertElement(20);
+
+    set2.insertElement(10);
+    set2.insertElement(15);
+    set2.insertElement(20);
+
+    set3 = set1.unionOfSets(set2);
+    cout << "Union of set1 and set2: " << set3.to_string() << endl;
+
+    set3 = set1.intersectionOfSets(set2);
+    cout << "Intersection of set1 and set2: " << set3.to_string() << endl;
+
+    set1.deleteElement(10);
+    cout << "After deleting 10 from set1: " << set1.to_string() << endl;
+
+    int arr[] = {30, 40, 50};
+    IntegerSet set4(arr, 3);
+    cout << "Set4 initialized with array: " << set4.to_string() << endl;
+
+    cout << "Is set1 equal to set2? " << (set1.isEqualTo(set2) ? "Yes" : "No") << endl;
+
+    return 0;
+}

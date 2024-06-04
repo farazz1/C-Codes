@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+class Account{
+  private:
+  int account_no;
+  int account_bal;
+  int security_code;
+  public:
+  Account(){
+      account_no = 0;
+      account_bal = 0;
+      security_code = 0;
+  };
+  void Initialize(const int a,int b,const int s){
+      account_no = a;
+      account_bal = b;
+      security_code = s;
+  }
+  void Display(){
+      cout<<"your account number is "<<account_no<<endl;
+      cout<<"your balance is $"<<account_bal<<endl;
+      cout<<"your security code is "<<security_code<<endl;
+  }
+};
+
+int main() {
+    Account obj;
+    obj.Initialize(863,100000,420);
+    obj.Display();
+    
+    return 0;
+}

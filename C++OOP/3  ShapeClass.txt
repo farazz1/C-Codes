@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Shape {
+public:
+    virtual ~Shape() {}
+    virtual double area() const = 0;
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) {}
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    double width, height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+    double area() const override {
+        return width * height;
+    }
+};
+
+// (a) Function to calculate total area of all shapes
+double total_area(const vector<Shape*>& shapes) {
+    double total = 0.0;
+    for (const auto& shape : shapes) {
+        total += shape->area();
+    }
+    return total;
+}
+
+// (b) Function to calculate total area of all circles
+double circle_area(const vector<Shape*>& shapes) {
+    double total = 0.0;
+    for (const auto& shape : shapes) {
+        // Check if the shape is a Circle
+        Circle* circle = dynamic_cast<Circle*>(shape);
+        if (circle != nullptr) {
+            total += circle->area();
+        }
+    }
+    return total;
+}
+
+int main() {
+    vector<Shape*> shapes;
+    shapes.push_back(new Circle(5.0));
+    shapes.push_back(new Rectangle(3.0, 4.0));
+    shapes.push_back(new Circle(2.0));
+
+    // Calculate total area of all shapes
+    cout << "Total area of all shapes: " << total_area(shapes) << endl;
+
+    // Calculate total area of all circles
+    cout << "Total area of all circles: " << circle_area(shapes) << endl;
+
+    // Free memory
+    for (const auto& shape : shapes) {
+        delete shape;
+    }
+
+    return 0;
+}

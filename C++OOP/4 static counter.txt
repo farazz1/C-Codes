@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+class ObjectCounter {
+private:
+    static int objectCount;  
+    const int constantValue;
+
+public:
+    ObjectCounter() : constantValue(42) {
+        objectCount++;
+    }
+
+    ~ObjectCounter() {
+        objectCount--;
+    }
+    
+    static int getObjectCount() {
+        return objectCount;
+    }
+
+    int getConstantValue() const {
+        return constantValue;
+    }
+};
+
+
+int ObjectCounter::objectCount = 0;
+
+int main() {
+    ObjectCounter obj1;
+    ObjectCounter obj2;
+    ObjectCounter obj3;
+    
+    cout << "Number of objects: " << ObjectCounter::getObjectCount() << endl;
+    cout << "Constant value: " << obj1.getConstantValue() << endl;
+
+    return 0;
+}

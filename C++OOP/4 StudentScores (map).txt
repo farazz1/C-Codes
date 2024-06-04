@@ -1,0 +1,50 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+class StudentScores {
+private:
+    map<string, int> scores;
+
+public:
+    void addStudent(const string& name, int score) {
+        scores[name] = score;
+        cout << "Student added successfully." << endl;
+    }
+
+    void removeStudent(const string& name) {
+        auto it = scores.find(name);
+        if (it != scores.end()) {
+            scores.erase(it);
+            cout << "Student removed successfully." << endl;
+        } else {
+            cout << "Student not found." << endl;
+        }
+    }
+
+    void displayScores() const {
+        cout << "Student Scores:" << endl;
+        for (const auto& pair : scores) {
+            cout << pair.first << ": " << pair.second << endl;
+        }
+    }
+};
+
+int main() {
+    StudentScores students;
+    students.addStudent("Ali", 85);
+    students.addStudent("Babar", 92);
+    students.addStudent("Raza", 78);
+    students.displayScores();
+
+    cout << "\nRemove student:" << endl;
+    string nameToRemove;
+    cout << "Enter student name to remove: ";
+    cin >> nameToRemove;
+    students.removeStudent(nameToRemove);
+    students.displayScores();
+
+    return 0;
+}

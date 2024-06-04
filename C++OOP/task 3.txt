@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <mutex>
+#include <thread>
+
+using namespace std;
+
+// Wrapper class for the container to provide thread-safe iteration
+template<typename T>
+class ThreadSafeContainer {
+private:
+    vector<T> data;
+    mutable mutex mtx;
+
+public:
+    // Function to add elements to the container
+    void addElement(T element) {
+        lock_guard<mutex> lock(mtx);
+        data.push_back(element);
+    }
+
+    // Function to iterate over the container and perform operations
+    template<typename Func>
+    void iterate(Func func) {
+        lock_guard<mutex> lock(mtx);
+        for (auto& element : data) {
+            func(element);
+        }
+    }
+};
+
+int main() {
+    // Initialize the container with integers 1 to 5
+    ThreadSafeContainer<int> container;
+    for (int i = 1; i <= 5; ++i) {
+        container.addElement(i);
+    }
+
+    // Thread 1 to double each element
+    thread thread1([&container]() {
+        container.iterate([](int& element) {
+            element *= 2;
+        });
+    });
+
+    // Thread 2 to square each element
+    thread thread2([&container]() {
+        container.iterate([](int& element) {
+            element *= element;
+        });
+    });
+
+    // Join threads
+    thread1.join();
+    thread2.join();
+
+    // Print the contents of the container
+    cout << "After Thread 1 completes the container contains: ";
+    container.iterate([](int element) {
+        cout << element << " ";
+    });
+    cout << endl;
+
+    cout << "After Thread 2 completes the container contains: ";
+    container.iterate([](int element) {
+        cout << element << " ";
+    });
+    cout << endl;
+
+    return 0;
+}

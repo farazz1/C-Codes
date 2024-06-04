@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Invoice {
+private:
+    vector<int> number;
+    vector<string> description;
+    vector<int> quantity;
+    vector<double> price;
+
+public:
+    Invoice(int n, string d, int q, double p) {
+        number.push_back(n);
+        description.push_back(d);
+        quantity.push_back(q);
+        price.push_back(p);
+    }
+
+    void getInvoice(int n) {
+        auto it = find(number.begin(), number.end(), n);
+        if (it != number.end()) {
+            int index = distance(number.begin(), it);
+            cout << "Invoice: " << endl;
+            cout << "Number " << number[index] << endl;
+            cout << "Description: " << description[index] << endl;
+            cout << "Quantity: " << quantity[index] << " available" << endl;
+            cout << "Price: $" << price[index] << endl;
+        } else {
+            cout << "Item " << n << " not found" << endl;
+        }
+    }
+};
+
+int main() {
+    int code;
+    cout << "Enter code for invoice: ";
+    cin >> code;
+
+    Invoice obj(2291, "it is a shoe", 32, 345.6);
+    Invoice obj2(3445, "it's a rolex watch", 4, 1234.65);
+
+    obj.getInvoice(code);
+
+    return 0;
+}

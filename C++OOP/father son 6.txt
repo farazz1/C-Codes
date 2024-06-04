@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+class father{
+    public:
+    void Display(){
+        cout<<"This is Father "<<endl;
+    }
+};
+class son : public father{
+    public:
+    void Display(){
+        cout<<"this is son "<<endl;
+    }
+};
+
+int main() {
+    son obj;
+    obj.Display();
+    
+    return 0;
+}

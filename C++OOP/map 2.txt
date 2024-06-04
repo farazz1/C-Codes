@@ -1,0 +1,26 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N; // Input the number of words
+
+    map<string, int> wordFrequency; // Map to store word frequencies
+
+    // Input words and count their frequencies
+    for (int i = 0; i < N; ++i) {
+        string word;
+        cin >> word;
+        wordFrequency[word]++; // Increment the frequency of the word
+    }
+
+    // Display words along with their frequencies in ascending order of frequencies
+    for (const auto& pair : wordFrequency) {
+        cout << pair.first << " " << pair.second << endl;
+    }
+
+    return 0;
+}

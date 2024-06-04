@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <cassert>
+
+using namespace std;
+
+int main() {
+    vector<string> v = {"This", "is", "a", "very", "important", "message", "."};
+
+    // Step 1: Initialize a string variable to store the reconstructed sentence
+    string reconstructedSentence;
+
+    // Step 2-4: Iterate over each string, concatenate to the reconstructed sentence, and find the position of "very"
+    size_t veryPosition = 0;
+    for (const string& word : v) {
+        reconstructedSentence += word + " ";
+        if (word == "very") {
+            veryPosition = reconstructedSentence.size() - word.size() - 1; // Store position of "very"
+        }
+    }
+
+    // Step 5-6: Split the reconstructed sentence into two parts before and after "very" and concatenate separately
+    string beforeVery = reconstructedSentence.substr(0, veryPosition);
+    string afterVery = reconstructedSentence.substr(veryPosition + 5); // "very" is 5 characters long
+
+    // Step 7: Assert that the reconstructed sentence matches the expected output
+    string expectedOutput = "This is a very important message .";
+    assert(reconstructedSentence == expectedOutput);
+
+    // Output the reconstructed sentence and its parts
+    cout << "Reconstructed Sentence: " << reconstructedSentence << endl;
+    cout << "Before 'very': " << beforeVery << endl;
+    cout << "After 'very': " << afterVery << endl;
+
+    return 0;
+}

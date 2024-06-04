@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+class Account{
+    private:
+    double balance;
+    public:
+    Account(){
+        balance = 0;
+    }
+    void credit(double x){
+        balance += x;
+        cout<< "the amount "<<x<<" has been added successfully!"<<endl;
+    }
+    void debit(double x){
+        balance -= x;
+        cout<< "the amount "<<x<<" has been withdrawn successfully!"<<endl;
+    }
+    double getBalance(){
+        return balance;
+    }
+};
+int main() {
+    double option{1};
+    Account obj;
+    
+    while(option != 0){
+        cout<<"Select: "<<endl<<"1 to add amount, 2 to withraw, 3 to check current balance"<<endl<<"0 to exit! ";
+        cin>>option;
+        if(option == 1){
+            double am;
+            cout<<"intput amount to add?: "<<endl;
+            cin>>am;
+            obj.credit(am);
+        }
+        else if(option == 2){
+            double am;
+            cout<<" how much would you like to withdraw? "<<endl;
+            cin>>am;
+            obj.debit(am);
+        }
+        else if(option == 3){
+            cout<<"your balance is "<<obj.getBalance()<<endl;
+        }
+        cout<<"Thank you! Please come again.";
+    } 
+    return 0;
+}

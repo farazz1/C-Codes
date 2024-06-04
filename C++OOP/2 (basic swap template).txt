@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+
+T swap_values(T a,T b){
+    T temp;
+    temp = a;
+    a = b;
+    b = temp;
+    cout<<a<<" "<<b<<endl;
+    return 0;
+}
+int main() {
+    swap_values(2,3);
+    swap_values(2.5,3.4);
+    
+    return 0;
+}

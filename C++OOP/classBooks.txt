@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Books{
+    private:
+    string author; 
+    string title; 
+    double price; 
+    string publisher; 
+    int stockposition;
+
+    public:
+    Books(){
+        price = 0;
+        stockposition = 0;
+    }
+    Books(string a, string t, double p, string pub, int s){
+        author = a;
+        title = t;
+        price = p;
+        publisher = pub;
+        stockposition = s;
+    }
+    bool Check(string n, string a){
+        return (title == n && author == a);
+    }
+    void Display() const {
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Publisher: " << publisher << endl;
+        cout << "Stock Position: " << stockposition << " copies" << endl;
+    }
+    void Order(int c){
+        if(c>stockposition){
+            cout<<"sorry we are out of stock! "<<endl;
+        }
+        else{
+            cout<<"Its your lucky day!"<<endl;
+
+            double totalCost = price * c;
+            cout << "Total cost for " << c << " copies: $" << totalCost << endl;
+
+            stockposition -= c;
+            cout << "Updated stock position: " << stockposition << " copies" << endl;
+        }
+    }
+};
+
+int main(){
+    Books book1("John Doe", "Introduction to C++", 29.99, "Tech Publications", 50);
+    Books book2("Jane Smith", "Data Structures in Java", 39.99, "Code Books", 20);
+
+    string checkTitle, checkAuthor;
+    cout << "\nEnter book title to check availability: ";
+    getline(cin, checkTitle);
+
+    cout << "Enter author name: ";
+    getline(cin, checkAuthor);
+
+    if(book1.Check(checkTitle,checkAuthor)){
+        int n;
+        book1.Display();
+        cout<<"how many would you like to purchase? "<<endl;
+        cin>>n;
+        book1.Order(n);
+    }
+    else{
+        cout<<"Sorry we dont have this book!"<<endl;
+    }
+    return 0;
+}

@@ -1,0 +1,72 @@
+#include <iostream>
+#include <array>
+using namespace std;
+
+template <class T>
+
+T sort_array(T arr[], T size){
+    T temp;
+    for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (arr[i] > arr[j]) {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+    cout << "Sorted (Ascending Order) Array elements:" << endl;
+    for (int i = 0; i < size; i++){
+        cout << arr[i] << "\t";
+    cout << endl; }  
+
+    return 0;
+}
+
+template <class T>
+ T  reverse_array(T arr[], T size){
+    T reversedArr[size];
+    for (int i = 0; i < size; i++) {
+        reversedArr[i] = arr[size - i - 1];
+    }
+ 
+    cout << "Reversed Array: ";
+    for (int i = 0; i < size; i++) {
+        cout << reversedArr[i] << " ";
+    }
+  }
+
+template <class T>
+T binary_search(T arr[], T size, T v) {
+    T low = 0;
+    T high = size - 1; // Fix: Initialize high to size - 1
+
+    while (low <= high) {
+        T mid = low + (high - low) / 2;
+
+        if (arr[mid] == v) // Fix: Change x to v
+            return mid;
+
+        if (arr[mid] < v) // Fix: Change x to v
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return -1;
+}
+
+
+int main(){
+    int array[5] = {1,4,2,7,5};
+    sort_array(array,5);
+    reverse_array(array,5);
+    cout<<endl;
+    int result = binary_search(array,5,4);
+    if (result == -1){
+        printf("Not found"); }
+    else{
+        printf("Element is found at index %d", result); }
+
+    return 0;
+}

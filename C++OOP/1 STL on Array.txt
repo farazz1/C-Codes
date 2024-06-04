@@ -1,0 +1,74 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> // For sort, reverse, min_element, max_element
+#include <numeric>   // For accumulate
+
+using namespace std;
+
+// Function to sort the array in non-decreasing order
+void sortArray(vector<int> &arr) {
+    sort(arr.begin(), arr.end());
+}
+
+// Function to reverse the array
+void reverseArray(vector<int> &arr) {
+    reverse(arr.begin(), arr.end());
+}
+
+// Function to rotate the array by 'k' positions
+void rotateArray(vector<int> &arr, int k) {
+    rotate(arr.begin(), arr.begin() + k, arr.end());
+}
+
+// Function to find the minimum element in the array
+int findMinElement(const vector<int> &arr) {
+    return *min_element(arr.begin(), arr.end());
+}
+
+// Function to find the maximum element in the array
+int findMaxElement(const vector<int> &arr) {
+    return *max_element(arr.begin(), arr.end());
+}
+
+// Function to count occurrences of a specific value in the array
+int countOccurrences(const vector<int> &arr, int value) {
+    return count(arr.begin(), arr.end(), value);
+}
+
+// Function to calculate the sum of all elements in the array
+int calculateSum(const vector<int> &arr) {
+    return accumulate(arr.begin(), arr.end(), 0);
+}
+
+int main() {
+    vector<int> arr = {5, -2, 10, 8, -3, 0, 12};
+
+    // Applying various operations on the array
+    sortArray(arr);
+    cout << "Sorted array: ";
+    for (int num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    reverseArray(arr);
+    cout << "Reversed array: ";
+    for (int num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    rotateArray(arr, 3);
+    cout << "Rotated array: ";
+    for (int num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    cout << "Minimum element: " << findMinElement(arr) << endl;
+    cout << "Maximum element: " << findMaxElement(arr) << endl;
+    cout << "Count of occurrences of 10: " << countOccurrences(arr, 10) << endl;
+    cout << "Sum of all elements: " << calculateSum(arr) << endl;
+
+    return 0;
+}

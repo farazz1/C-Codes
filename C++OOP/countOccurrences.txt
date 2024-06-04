@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+using namespace std;
+
+template <typename Container, typename T>
+
+int  countOccurrences(const Container& container, const T& value){
+    return count(container.begin(),container.end(),value);
+}
+
+template <typename T, size_t N>
+
+int countOccurrences(const T (&array)[N], const T& value) {
+    return count(begin(array), end(array), value);
+}
+
+int main(){
+    vector<int> vec = {1,2,3,4,5,2,3,1,1,3};
+    int arr[] = {1,2,3,4,1,6,1,7,1,5,1};
+    int value = 1;
+    cout<<"the value "<<value<<" occurred this times "<<countOccurrences(vec,value)<<" in vector"<<endl;
+    cout<<"the value "<<value<<" occurred this times "<<countOccurrences(arr,value)<<" in array"<<endl;
+    return 0;
+}

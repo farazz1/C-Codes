@@ -1,0 +1,73 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Draw {
+protected:
+    int side1;
+    int side2;
+    int base;
+    int angle;
+    int radius;
+
+public:
+    Draw(int s, int s2, int b, int a, int r) {
+        side1 = s;
+        side2 = s2;
+        base = b;
+        angle = a;
+        radius = r;
+    }
+};
+
+class drawRectangle : public Draw {
+public:
+    drawRectangle(int s, int s2) : Draw(s, s2, 0, 0, 0) {}
+
+    int AreaR() {
+        return side1 * side2;
+    }
+};
+
+class drawRhombus : public Draw {
+public:
+    drawRhombus(int b, int a) : Draw(0, 0, b, a, 0) {}
+
+    int AreaR() {
+        return base * base * sin(angle);
+    }
+};
+
+class drawCircle : public Draw {
+public:
+    drawCircle(int r) : Draw(0, 0, 0, 0, r) {}
+
+    int AreaR() {
+        return (22.0 / 7.0) * radius * radius;
+    }
+};
+
+int main() {
+    int s1, s2, r, a, b;
+
+    cout << "Enter value of rectangle side 1 " << endl;
+    cin >> s1;
+    cout << "Enter value of rectangle side 2 " << endl;
+    cin >> s2;
+    cout << "Enter value of radius " << endl;
+    cin >> r;
+    cout << "Enter value of base of rhombus " << endl;
+    cin >> b;
+    cout << "Enter value of angle of rhombus " << endl;
+    cin >> a;
+
+    drawRectangle rec(s1, s2);
+    drawRhombus rom(b, a);
+    drawCircle cir(r);
+
+    cout << "Area of rectangle: " << rec.AreaR() << endl;
+    cout << "Area of rhombus: " << rom.AreaR() << endl;
+    cout << "Area of circle is: " << cir.AreaR() << endl;
+
+    return 0;
+}

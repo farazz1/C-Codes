@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <ranges>
+#include <numeric> // for std::accumulate
+#include <algorithm> // for std::max_element
+
+using namespace std;
+
+struct City {
+    string name;
+    int population;
+};
+
+int main() {
+    // Input data
+    vector<City> cities = {
+        {"New York", 8623000},
+        {"Los Angeles", 3990000},
+        {"Chicago", 2716000},
+        {"Houston", 2329000},
+        {"Phoenix", 1640000},
+        {"Philadelphia", 1584000},
+        {"San Antonio", 1546000}
+    };
+
+    // Threshold population
+    int threshold = 1000000;
+
+    // Filter the list to include only cities with population above the threshold
+    auto filteredCities = cities | views::filter([threshold](const City& city) {
+        return city.population > threshold;
+    });
+
+    // Print cities with population above the threshold
+    cout << "Cities with a population above the threshold: ";
+    for (const auto& city : filteredCities) {
+        cout << "(" << city.name << ", " << city.population << ") ";
+    }
+    cout << endl;
+
+    // Calculate the average population of cities above the threshold
+    double averagePopulation = accumulate(filteredCities.begin(), filteredCities.end(), 0,
+                                          [](int sum, const City& city) {
+                                              return sum + city.population;
+                                          }) / static_cast<double>(ranges::distance(filteredCities));
+
+    // Print the average population
+    cout << "Average population of cities with a population above the threshold: " << averagePopulation << endl;
+
+    // Find the city with the largest population among those above the threshold
+    auto maxCity = max_element(filteredCities.begin(), filteredCities.end(),
+                               [](const City& a, const City& b) {
+                                   return a.population < b.population;
+                               });
+
+    // Print the city with the largest population
+    cout << "City with the largest population among those with a population above the threshold: " << maxCity->name << endl;
+
+    return 0;
+}

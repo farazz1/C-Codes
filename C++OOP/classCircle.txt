@@ -1,0 +1,37 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Circle{
+    private:
+    int radius;
+    public:
+    Circle(int r){
+        radius = r;
+    }
+    double getArea(){
+        return (22/7)*radius*radius;
+    }
+    double getPerimetre(){
+        return 2*(22/7)*radius;
+    }
+};
+int main() {
+    int r,o;
+    cout<<"enter radius: "<<endl;
+    cin>>r;
+    Circle obj(r);
+    cout<<"1 for area and 2 for perimetre: "<<endl;
+    cin>>o;
+    if(o == 1){
+        cout<<"the area is "<<obj.getArea()<<endl;
+    }
+    else if(o == 2){
+        cout<<"the perimetre is "<<obj.getPerimetre()<<endl;
+    }
+    else{
+        cout<<"wrong option: "<<endl;
+    }
+    
+    return 0;
+}

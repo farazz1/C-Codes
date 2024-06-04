@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <ranges>
+#include <random>
+
+using namespace std;
+
+int main() {
+    // Arithmetic Progression using views::iota
+    cout << "Arithmetic Progression:" << endl;
+    for (int i : views::iota(1, 20) | views::stride(2)) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // Random Numbers using views::generate
+    cout << "Random Numbers:" << endl;
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, 100); // Range of random numbers from 1 to 100
+    for (int i : views::generate([&, n = 0]() mutable {
+        return dis(gen);
+    }) | views::take(10)) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // Repeated Values using views::repeat
+    cout << "Repeated Values:" << endl;
+    for (int i : views::repeat(10) | views::take(10)) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    return 0;
+}

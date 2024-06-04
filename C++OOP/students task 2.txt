@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <numeric> // for std::accumulate
+
+using namespace std;
+
+struct Student {
+    string name;
+    int score;
+    bool passed;
+};
+
+int main() {
+    vector<Student> students = {
+        {"Ali", 8, true},
+        {"Maaz", 6, false},
+        {"Usman", 7, true},
+        {"Hamza", 9, true},
+        {"Maryam", 5, false}
+    };
+
+    // Filter the list to include only the students who scored 7 out of 10
+    vector<Student> passedStudents;
+    for (const auto& student : students) {
+        if (student.score == 7) {
+            passedStudents.push_back(student);
+        }
+    }
+
+    // Print the list of students who passed the class
+    cout << "List of students who passed the class:" << endl;
+    for (const auto& student : passedStudents) {
+        cout << "- " << student.name << endl;
+    }
+
+    // Calculate the average score of the students who passed
+    double sum = 0;
+    int count = 0;
+    for (const auto& student : students) {
+        if (student.score > 7) {
+            sum += student.score;
+            ++count;
+        }
+    }
+    double averageScore = count > 0 ? sum / count : 0;
+
+    // Print the average score
+    cout << "Average score of the students who passed: " << averageScore << endl;
+
+    // Find the student with the highest score among those who scored above 7
+    auto highestScoringStudent = max_element(students.begin(), students.end(),
+                                             [](const Student& a, const Student& b) {
+                                                 return a.score < b.score;
+                                             });
+
+    // Print the highest scoring student
+    cout << "Highest scoring student is: " << highestScoringStudent->name << endl;
+
+    return 0;
+}

@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Student {
+protected:
+    string studentName;
+    int studentID;
+
+public:
+    Student(const string& name, int id) : studentName(name), studentID(id) {}
+
+    void displayStudentInfo() const {
+        cout << "Student Name: " << studentName << endl;
+        cout << "Student ID: " << studentID << endl;
+    }
+};
+
+class Marks : public Student {
+protected:
+    vector<int> courseMarks;
+
+public:
+    Marks(const string& name, int id, const vector<int>& marks)
+        : Student(name, id), courseMarks(marks) {}
+
+    void displayCourseMarks() const {
+        cout << "Marks obtained in each course:" << endl;
+        for (size_t i = 0; i < courseMarks.size(); ++i) {
+            cout << "Course " << i + 1 << ": " << courseMarks[i] << endl;
+        }
+    }
+};
+
+class Result : public Marks {
+public:
+    Result(const string& name, int id, const vector<int>& marks)
+        : Marks(name, id, marks) {}
+
+    void displayResult() const {
+        int totalMarks = 0;
+        for (int mark : courseMarks) {
+            totalMarks += mark;
+        }
+
+        double averageMarks = static_cast<double>(totalMarks) / courseMarks.size();
+
+        cout << "Total Marks: " << totalMarks << endl;
+        cout << "Average Marks: " << averageMarks << endl;
+    }
+};
+
+int main() {
+    vector<int> marksList = {90, 85, 92, 78, 88};
+    Result result("John Doe", 12345, marksList);
+
+    result.displayStudentInfo();
+    cout << endl;
+
+    result.displayCourseMarks();
+    cout << endl;
+
+    result.displayResult();
+
+    return 0;
+}
