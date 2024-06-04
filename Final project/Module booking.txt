@@ -1,0 +1,151 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <ctime>
+#include <iomanip>
+
+using namespace std;
+
+class Booking {
+private:
+    unordered_map<string, vector<tuple<string, int, string, string>>> bookedTests; // Store booked tests for each student
+
+    bool validateSeason(char season) {
+        return (season == 'S' || season == 'W');
+    }
+
+    bool validateTestName(const string& testName, char season) {
+        if (season == 'S') {
+            return (testName == "Mathematics" || testName == "Science" || testName == "English");
+        } else if (season == 'W') {
+            return (testName == "History" || testName == "Geography" || testName == "Literature");
+        }
+        return false;
+    }
+
+    bool isTestAlreadyBooked(const string& studentID, const string& testName, const string& month, const string& timeSlot) {
+        if (bookedTests.find(studentID) != bookedTests.end()) {
+            for (auto const& test : bookedTests[studentID]) {
+                if (get<0>(test) == testName && get<2>(test) == month && get<3>(test) == timeSlot) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+public:
+    void bookTest(const string& studentID) {
+        string testName;
+        int price;
+        char season;
+        string month;
+        string timeSlot;
+
+        cout << "Enter the season for booking (S for Summer, W for Winter): ";
+        cin >> season;
+        season = toupper(season);
+
+        if (!validateSeason(season)) {
+            cout << "Invalid season." << endl;
+            return;
+        }
+
+        if (season == 'S') {
+            month = "June/July";
+            cout << "Available tests for Summer (June/July):" << endl;
+            cout << "1. Mathematics" << endl;
+            cout << "2. Science" << endl;
+            cout << "3. English" << endl;
+        } else if (season == 'W') {
+            month = "October/November";
+            cout << "Available tests for Winter (October/November):" << endl;
+            cout << "1. History" << endl;
+            cout << "2. Geography" << endl;
+            cout << "3. Literature" << endl;
+        }
+
+        cout << "Enter the name of the test you want to book: ";
+        cin.ignore();
+        getline(cin, testName);
+
+        if (!validateTestName(testName, season)) {
+            cout << "Invalid test name." << endl;
+            return;
+        }
+
+        cout << "Enter the time slot for the test (M for Morning, E for Evening): ";
+        cin >> timeSlot;
+        timeSlot = toupper(timeSlot[0]);
+
+        if (timeSlot != "M" && timeSlot != "E") {
+            cout << "Invalid time slot." << endl;
+            return;
+        }
+
+        if (isTestAlreadyBooked(studentID, testName, month, timeSlot)) {
+            cout << "You have already booked this test in " << month << " at " << (timeSlot == "M" ? "Morning" : "Evening") << " session." << endl;
+            return;
+        }
+
+        if (testName == "Mathematics") {
+            price = 50;
+        } else if (testName == "Science") {
+            price = 60;
+        } else if (testName == "English") {
+            price = 40;
+        } else if (testName == "History") {
+            price = 55;
+        } else if (testName == "Geography") {
+            price = 45;
+        } else if (testName == "Literature") {
+            price = 50;
+        }
+
+        // Store booked test for the student
+        bookedTests[studentID].push_back(make_tuple(testName, price, month, timeSlot));
+        cout << "Test booked successfully. Total price: $" << price << endl;
+    }
+
+    void displayBookings(const string& studentID) {
+        if (bookedTests.find(studentID) != bookedTests.end()) {
+            cout << "Tests booked for student ID " << studentID << ":" << endl;
+            int totalPrice = 0;
+            for (const auto& test : bookedTests[studentID]) {
+                cout << "Test: " << get<0>(test) << ", Price: $" << get<1>(test) << ", Month: " << get<2>(test) << ", Time Slot: " << (get<3>(test) == "M" ? "Morning" : "Evening") << endl;
+                totalPrice += get<1>(test);
+            }
+            cout << "Total Price for all tests: $" << totalPrice << endl;
+        } else {
+            cout << "No tests booked for student ID " << studentID << "." << endl;
+        }
+    }
+};
+
+int main() {
+    Booking bookingSystem;
+    string studentID;
+    char choice;
+
+    cout << "Enter your student ID: ";
+    cin >> studentID;
+
+    do {
+        cout << "Do you want to book a test? (Y/N): ";
+        cin >> choice;
+
+        if (toupper(choice) == 'Y') {
+            bookingSystem.bookTest(studentID);
+        }
+    } while (toupper(choice) == 'Y');
+
+    cout << "Do you want to display your bookings? (Y/N): ";
+    cin >> choice;
+
+    if (toupper(choice) == 'Y') {
+        bookingSystem.displayBookings(studentID);
+    }
+
+    return 0;
+}

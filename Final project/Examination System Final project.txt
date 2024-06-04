@@ -1,0 +1,368 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <tuple>
+#include <iomanip>
+#include <ctime>
+#include <fstream>
+
+using namespace std;
+
+class Examination {
+private:
+    struct Course {
+        string name;
+        string season;
+        int seats;
+        string details;
+    };
+
+    struct Receipt {
+        string studentID;
+        string studentName;
+        string paymentMethod;
+        string dueDate;
+        double subtotal;
+        double tax;
+        double total;
+        vector<tuple<string, int, string, string>> tests;
+    };
+
+    unordered_map<string, unordered_map<string, string>> students;
+    unordered_map<string, vector<tuple<string, int, string, string>>> bookedTests;
+    unordered_map<string, Receipt> receipts;
+    unordered_map<string, vector<Course>> coursesByLevel;
+    const double taxRate = 0.10; // 10% tax rate
+
+    bool validateSeason(char season) {
+        return (season == 'S' || season == 'W');
+    }
+
+    bool validateTestName(const string& testName, char season) {
+        if (season == 'S') {
+            return (testName == "Mathematics" || testName == "Science" || testName == "English");
+        } else if (season == 'W') {
+            return (testName == "History" || testName == "Geography" || testName == "Literature");
+        }
+        return false;
+    }
+
+    bool isTestAlreadyBooked(const string& studentID, const string& testName, const string& month, const string& timeSlot) {
+        if (bookedTests.find(studentID) != bookedTests.end()) {
+            for (auto const& test : bookedTests[studentID]) {
+                if (get<0>(test) == testName && get<2>(test) == month && get<3>(test) == timeSlot) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void saveReceipt(const Receipt& receipt) {
+        receipts[receipt.studentID] = receipt;
+        cout << "Receipt saved successfully!" << endl;
+    }
+
+public:
+    void displayInterface() {
+        cout << "Welcome to the Examination System!" << endl;
+        cout << "---------------------------------" << endl;
+        cout << "1. Create a new account" << endl;
+        cout << "2. Access existing account" << endl;
+        cout << "0. Exit" << endl;
+        cout << "---------------------------------" << endl;
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                createAccount();
+                break;
+            case 2:
+                accessAccount();
+                break;
+            case 0:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                displayInterface();
+                break;
+        }
+    }
+
+    void createAccount() {
+        string name, age, studentID, grades, educationLevel;
+        cout << "Enter your name: ";
+        cin.ignore();
+        getline(cin, name);
+        cout << "Enter your age: ";
+        getline(cin, age);
+        cout << "Enter your student ID: ";
+        getline(cin, studentID);
+        cout << "Enter your grades: ";
+        getline(cin, grades);
+        cout << "Enter your education level (O levels, A levels, University, or Masters): ";
+        getline(cin, educationLevel);
+
+        students[studentID] = {
+            {"Name", name},
+            {"Age", age},
+            {"ID", studentID},
+            {"Grades", grades},
+            {"Education Level", educationLevel}
+        };
+        cout << "Account created successfully!" << endl;
+        displayInterface();
+    }
+
+    void accessAccount() {
+        string studentID;
+        cout << "Enter your student ID: ";
+        cin >> studentID;
+
+        if (students.find(studentID) != students.end()) {
+            cout << "Accessing account for student ID: " << studentID << endl;
+            displayAccountMenu(studentID);
+        } else {
+            cout << "Student ID not found." << endl;
+            displayInterface();
+        }
+    }
+
+    void displayAccountMenu(const string& studentID) {
+        cout << "---------------------------------" << endl;
+        cout << "1. Book a test" << endl;
+        cout << "2. View booked tests" << endl;
+        cout << "3. Explore courses" << endl;
+        cout << "4. View receipt" << endl;
+        cout << "0. Logout" << endl;
+        cout << "---------------------------------" << endl;
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                bookTest(studentID);
+                break;
+            case 2:
+                displayBookings(studentID);
+                break;
+            case 3:
+                exploreCourses(studentID);
+                break;
+            case 4:
+                viewReceipt(studentID);
+                break;
+            case 0:
+                cout << "Logging out." << endl;
+                displayInterface();
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                displayAccountMenu(studentID);
+                break;
+        }
+    }
+
+ void bookTest(const string& studentID) {
+    string testName;
+    int price;
+    char season;
+    string month;
+    string timeSlot;
+
+    cout << "Enter the season for booking (S for Summer, W for Winter): ";
+    cin >> season;
+    season = toupper(season);
+
+    if (!validateSeason(season)) {
+        cout << "Invalid season." << endl;
+        return;
+    }
+
+    if (season == 'S') {
+        month = "June/July";
+        cout << "Available tests for Summer (June/July):" << endl;
+        cout << "1. Mathematics" << endl;
+        cout << "2. Science" << endl;
+        cout << "3. English" << endl;
+    } else if (season == 'W') {
+        month = "October/November";
+        cout << "Available tests for Winter (October/November):" << endl;
+        cout << "1. History" << endl;
+        cout << "2. Geography" << endl;
+        cout << "3. Literature" << endl;
+    }
+
+    cout << "Enter the name of the test you want to book: ";
+    cin.ignore();
+    getline(cin, testName);
+
+    if (!validateTestName(testName, season)) {
+        cout << "Invalid test name." << endl;
+        return;
+    }
+
+    cout << "Enter the time slot for the test (M for Morning, E for Evening): ";
+    cin >> timeSlot;
+    timeSlot = toupper(timeSlot[0]);
+
+    if (timeSlot != "M" && timeSlot != "E") {
+        cout << "Invalid time slot." << endl;
+        return;
+    }
+
+    if (isTestAlreadyBooked(studentID, testName, month, timeSlot)) {
+        cout << "You have already booked this test in " << month << " at " << (timeSlot == "M" ? "Morning" : "Evening") << " session." << endl;
+        return;
+    }
+
+    if (testName == "Mathematics") {
+        price = 50;
+    } else if (testName == "Science") {
+        price = 60;
+    } else if (testName == "English") {
+        price = 40;
+    } else if (testName == "History") {
+        price = 55;
+    } else if (testName == "Geography") {
+        price = 45;
+    } else if (testName == "Literature") {
+        price = 50;
+    }
+
+    // Store booked test for the student
+    bookedTests[studentID].push_back(make_tuple(testName, price, month, timeSlot));
+    cout << "Test booked successfully. Total price: $" << price << endl;
+
+    // Generate receipt
+    Receipt receipt;
+    receipt.studentID = studentID;
+    receipt.studentName = students[studentID]["Name"];
+    receipt.paymentMethod = "N/A"; // Payment method is not captured in this version
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    ltm->tm_mday += 10;
+    mktime(ltm);
+    receipt.dueDate = to_string(ltm->tm_mday) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(1900 + ltm->tm_year);
+    receipt.tests = bookedTests[studentID];
+    receipt.subtotal = price;
+    receipt.tax = price * taxRate;
+    receipt.total = receipt.subtotal + receipt.tax;
+
+    saveReceipt(receipt);
+
+    // Return to main menu
+    displayAccountMenu(studentID);
+}
+
+
+    void displayBookings(const string& studentID) {
+        if (bookedTests.find(studentID) != bookedTests.end()) {
+            cout << "Tests booked for student ID " << studentID << ":" << endl;
+            int totalPrice = 0;
+            for (const auto& test : bookedTests[studentID]) {
+                cout << "Test: " << get<0>(test) << ", Price: $" << get<1>(test) << ", Month: " << get<2>(test) << ", Time Slot: " << (get<3>(test) == "M" ? "Morning" : "Evening") << endl;
+                totalPrice += get<1>(test);
+            }
+            cout << "Total Price for all tests: $" << totalPrice << endl;
+        } else {
+            cout << "No tests booked for student ID " << studentID << "." << endl;
+        }
+        displayAccountMenu(studentID);
+    }
+
+ void exploreCourses(const string& studentID) {
+    cout << "---------------------------------" << endl;
+    cout << "Available courses for your education level:" << endl;
+    cout << "1. O Levels" << endl;
+    cout << "2. A Levels" << endl;
+    cout << "3. University" << endl;
+    cout << "4. Masters" << endl;
+    cout << "0. Go back" << endl;
+    cout << "---------------------------------" << endl;
+    cout << "Enter your choice number: ";
+    string choice;
+    cin >> choice;
+
+    string level;
+    if (choice == "1") {
+        level = "O Levels";
+    } else if (choice == "2") {
+        level = "A Levels";
+    } else if (choice == "3") {
+        level = "University";
+    } else if (choice == "4") {
+        level = "Masters";
+    } else if (choice == "0") {
+        displayAccountMenu(studentID);
+        return;
+    } else {
+        cout << "Invalid choice. Please try again." << endl;
+        exploreCourses(studentID);
+        return;
+    }
+
+    cout << "Enter the season (S for Summer, W for Winter): ";
+    char season;
+    cin >> season;
+    season = toupper(season);
+
+    if (season != 'S' && season != 'W') {
+        cout << "Invalid season. Try again." << endl;
+        exploreCourses(studentID);
+        return;
+    }
+
+    string seasonStr = (season == 'S') ? "Summer" : "Winter";
+    displayCourses(level, seasonStr);
+
+    // After displaying courses, return to the main menu
+    displayAccountMenu(studentID);
+}
+
+
+
+    void viewReceipt(const string& studentID) {
+        if (receipts.find(studentID) != receipts.end()) {
+            const Receipt& receipt = receipts[studentID];
+            cout << "\n--- Receipt ---\n";
+            cout << "Student ID: " << receipt.studentID << "\n";
+            cout << "Student Name: " << receipt.studentName << "\n";
+            cout << "Payment Method: " << receipt.paymentMethod << "\n";
+            cout << "Due Date: " << receipt.dueDate << "\n";
+            cout << "\nTests booked:\n";
+            for (const auto& test : receipt.tests) {
+                cout << "Test: " << get<0>(test) << ", Price: $" << get<1>(test) << ", Month: " << get<2>(test) << ", Time Slot: " << (get<3>(test) == "M" ? "Morning" : "Evening") << "\n";
+            }
+            cout << "\nSubtotal: $" << receipt.subtotal << "\n";
+            cout << "Tax (10%): $" << receipt.tax << "\n";
+            cout << "Total: $" << receipt.total << "\n";
+            cout << "-----------------\n";
+        } else {
+            cout << "No receipt found for student ID " << studentID << "." << endl;
+        }
+        displayAccountMenu(studentID);
+    }
+
+    void displayCourses(const string& level, const string& season) {
+        cout << "Available courses for " << level << " in " << season << ":\n";
+        for (const auto& course : coursesByLevel[level]) {
+            if (course.season == season) {
+                cout << "Course: " << course.name << ", Seats available: " << course.seats << endl;
+            }
+        }
+    }
+
+};
+
+int main() {
+    Examination examSystem;
+    examSystem.displayInterface();
+    return 0;
+}
+

@@ -1,0 +1,153 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <tuple>
+#include <iomanip>
+
+using namespace std;
+
+class Courses {
+private:
+    struct Course {
+        string name;
+        string season;
+        int seats;
+        string details;
+    };
+
+    unordered_map<string, vector<Course>> coursesByLevel;
+
+public:
+    Courses() {
+        // Initialize courses for each education level
+        coursesByLevel["O Levels"] = {
+            {"Mathematics", "Summer", 10, "Mathematics course details for O Levels in Summer"},
+            {"Science", "Summer", 8, "Science course details for O Levels in Summer"},
+            {"English", "Winter", 15, "English course details for O Levels in Winter"},
+            {"History", "Winter", 5, "History course details for O Levels in Winter"}
+        };
+
+        coursesByLevel["A Levels"] = {
+            {"Physics", "Summer", 12, "Physics course details for A Levels in Summer"},
+            {"Chemistry", "Summer", 7, "Chemistry course details for A Levels in Summer"},
+            {"Biology", "Winter", 20, "Biology course details for A Levels in Winter"},
+            {"Mathematics", "Winter", 10, "Mathematics course details for A Levels in Winter"}
+        };
+
+        coursesByLevel["University"] = {
+            {"Computer Science", "Summer", 25, "Computer Science course details for University in Summer"},
+            {"Engineering", "Summer", 10, "Engineering course details for University in Summer"},
+            {"Literature", "Winter", 30, "Literature course details for University in Winter"},
+            {"Economics", "Winter", 10, "Economics course details for University in Winter"}
+        };
+
+        coursesByLevel["Masters"] = {
+            {"Data Science", "Summer", 5, "Data Science course details for Masters in Summer"},
+            {"Business Administration", "Summer", 8, "Business Administration course details for Masters in Summer"},
+            {"Psychology", "Winter", 6, "Psychology course details for Masters in Winter"},
+            {"Philosophy", "Winter", 9, "Philosophy course details for Masters in Winter"}
+        };
+    }
+
+    void displayCourses(const string& level, const string& season) {
+        cout << "Available courses for " << level << " in " << season << ":\n";
+        for (const auto& course : coursesByLevel[level]) {
+            if (course.season == season) {
+                cout << "Course: " << course.name << ", Seats available: " << course.seats << endl;
+            }
+        }
+    }
+
+    void bookCourse(const string& level, const string& season, const string& courseName) {
+        for (auto& course : coursesByLevel[level]) {
+            if (course.name == courseName && course.season == season) {
+                if (course.seats > 0) {
+                    course.seats--;
+                    cout << "Successfully booked " << course.name << ". Seats remaining: " << course.seats << endl;
+                } else {
+                    cout << "No seats available for " << course.name << " in " << season << "." << endl;
+                }
+                return;
+            }
+        }
+        cout << "Course not found." << endl;
+    }
+
+    void searchCourse(const string& level, const string& courseName) {
+        for (const auto& course : coursesByLevel[level]) {
+            if (course.name == courseName) {
+                cout << "Course: " << course.name << ", Season: " << course.season 
+                     << ", Seats available: " << course.seats << ", Details: " << course.details << endl;
+                return;
+            }
+        }
+        cout << "Course not found." << endl;
+    }
+};
+
+int main() {
+    Courses courses;
+    string level;
+    char season;
+    string courseName;
+    int choice;
+
+    while (true) {
+        cout << "\nSelect your level of education:\n1. O Levels\n2. A Levels\n3. University\n4. Masters\n";
+        cout << "Enter your choice (1-4, 0 to exit): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                level = "O Levels";
+                break;
+            case 2:
+                level = "A Levels";
+                break;
+            case 3:
+                level = "University";
+                break;
+            case 4:
+                level = "Masters";
+                break;
+            case 0:
+                cout << "Exiting...\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Try again.\n";
+                continue;
+        }
+
+        cout << "Enter the season (S for Summer, W for Winter): ";
+        cin >> season;
+        season = toupper(season);
+
+        if (season != 'S' && season != 'W') {
+            cout << "Invalid season. Try again.\n";
+            continue;
+        }
+
+        string seasonStr = (season == 'S') ? "Summer" : "Winter";
+        courses.displayCourses(level, seasonStr);
+
+        cout << "\nOptions:\n1. Book a course\n2. Search for a course\nEnter your choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            cout << "Enter the name of the course you want to book: ";
+            cin.ignore();
+            getline(cin, courseName);
+            courses.bookCourse(level, seasonStr, courseName);
+        } else if (choice == 2) {
+            cout << "Enter the name of the course you want to search: ";
+            cin.ignore();
+            getline(cin, courseName);
+            courses.searchCourse(level, courseName);
+        } else {
+            cout << "Invalid choice. Try again.\n";
+        }
+    }
+
+    return 0;
+}

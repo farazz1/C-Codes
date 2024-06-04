@@ -1,0 +1,82 @@
+class Invoice {
+private:
+    string studentID;
+    string studentName;
+    string paymentMethod;
+    string dueDate;
+    Booking& bookingSystem;
+    const double taxRate = 0.10; // 10% tax rate
+
+public:
+    Invoice(Booking& bookingSys) : bookingSystem(bookingSys) {}
+
+    void generateInvoice() {
+        cout << "Enter your student ID: ";
+        cin >> studentID;
+        cin.ignore();
+        cout << "Enter your name: ";
+        getline(cin, studentName);
+        
+        cout << "Choose your payment method (Online/Bank): ";
+        getline(cin, paymentMethod);
+
+        // Generate due date 10 days from now
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+        ltm->tm_mday += 10;
+        mktime(ltm);
+        dueDate = to_string(ltm->tm_mday) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(1900 + ltm->tm_year);
+
+        // Get booked tests
+        const auto& tests = bookingSystem.getBookedTests(studentID);
+        if (tests.empty()) {
+            cout << "No tests booked for student ID " << studentID << "." << endl;
+            return;
+        }
+
+        // Calculate totals
+        double subtotal = 0;
+        for (const auto& test : tests) {
+            subtotal += get<1>(test);
+        }
+        double tax = subtotal * taxRate;
+        double total = subtotal + tax;
+
+        // Display invoice
+        cout << "\n--- Invoice ---\n";
+        cout << "Student ID: " << studentID << "\n";
+        cout << "Student Name: " << studentName << "\n";
+        cout << "Payment Method: " << paymentMethod << "\n";
+        cout << "Due Date: " << dueDate << "\n";
+        cout << "\nTests booked:\n";
+        for (const auto& test : tests) {
+            cout << "Test: " << get<0>(test) << ", Price: $" << get<1>(test) << ", Month: " << get<2>(test) << ", Time Slot: " << (get<3>(test) == "M" ? "Morning" : "Evening") << "\n";
+        }
+        cout << "\nSubtotal: $" << subtotal << "\n";
+        cout << "Tax (10%): $" << tax << "\n";
+        cout << "Total: $" << total << "\n";
+        cout << "-----------------\n";
+
+        // Optionally, save the invoice to a file
+        saveInvoiceToFile(subtotal, tax, total, tests);
+    }
+
+    void saveInvoiceToFile(double subtotal, double tax, double total, const vector<tuple<string, int, string, string>>& tests) {
+        ofstream invoiceFile("invoice_" + studentID + ".txt");
+        if (invoiceFile.is_open()) {
+            invoiceFile << "--- Invoice ---\n";
+            invoiceFile << "Student ID: " << studentID << "\n";
+            invoiceFile << "Student Name: " << studentName << "\n";
+            invoiceFile << "Payment Method: " << paymentMethod << "\n";
+            invoiceFile << "Due Date: " << dueDate << "\n";
+            invoiceFile << "\nTests booked:\n";
+            for (const auto& test : tests) {
+                invoiceFile << "Test: " << get<0>(test) << ", Price: $" << get<1>(test) << ", Month: " << get<2>(test) << ", Time Slot: " << (get<3>(test) == "M" ? "Morning" : "Evening") << "\n";
+            }
+            invoiceFile << "\nSubtotal: $" << subtotal << "\n";
+            invoiceFile << "Tax (10%): $" << tax << "\n";
+            invoiceFile << "Total: $" << total << "\n";
+            invoiceFile << "-----------------\n";
+            invoiceFile.close();
+            cout << "Invoice saved to file: invoice_" << studentID << ".txt\n";
+       

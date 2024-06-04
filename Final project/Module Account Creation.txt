@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+class StudentAccount {
+private:
+    unordered_map<string, unordered_map<string, string>> students;
+
+public:
+    void createAccount() {
+        string name, age, studentID, grades, educationLevel;
+        cout << "Enter your name: ";
+        getline(cin, name);
+        cout << "Enter your age: ";
+        getline(cin, age);
+        cout << "Enter your student ID: ";
+        getline(cin, studentID);
+        cout << "Enter your grades: ";
+        getline(cin, grades);
+        cout << "Enter your education level (O levels, A levels, University, or Masters): ";
+        getline(cin, educationLevel);
+
+        students[studentID] = {
+            {"Name", name},
+            {"Age", age},
+            {"ID", studentID},
+            {"Grades", grades},
+            {"Education Level", educationLevel}
+        };
+        cout << "Account created successfully!" << endl;
+    }
+
+  void displayAccount() {
+    string studentID;
+    cout << "Enter your student ID to display your account: ";
+    getline(cin, studentID);
+
+    if (students.find(studentID) != students.end()) {
+        cout << "\nStudent Details:" << endl;
+        unordered_map<string, string>& studentDetails = students[studentID];
+        for (auto const& pair : studentDetails) {
+            cout << pair.first << ": " << pair.second << endl;
+        }
+    } else {
+        cout << "Student ID not found." << endl;
+    }
+}
+
+};
+
+int main() {
+    StudentAccount account;
+    string choice;
+
+    while (true) {
+        cout << "Do you want to create a new account (enter 'create') or display existing account (enter 'display')? Enter 'quit' to exit: ";
+        getline(cin, choice);
+
+        if (choice == "create") {
+            account.createAccount();
+        } else if (choice == "display") {
+            account.displayAccount();
+        } else if (choice == "quit") {
+            cout << "Exiting program." << endl;
+            break;
+        } else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
