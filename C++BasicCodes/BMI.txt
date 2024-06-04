@@ -1,0 +1,24 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <cmath>
+using std::cout;
+using std::cin;
+
+int main() {
+    double weight, height, BMI;
+    cout<< "Enter your weight in kg";
+    cin >> weight;
+    cout << "enter height";
+    cin >> height;
+    height = pow(height, 2);
+    BMI = weight/height;
+    if (BMI>=30.0 )
+    cout << "obese";
+    else if (BMI>=25.0)
+    cout<<"overweight";
+    else if (BMI>=18.5)
+    cout<<"normal";
+    else 
+    cout << "underweight";
+    return 0;
+}

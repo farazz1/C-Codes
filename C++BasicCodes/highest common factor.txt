@@ -1,0 +1,27 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using std::cout;
+using std::cin;
+int main() {
+    int lowest,number1,number2,GCD;
+    cout<<"Enter number1 ";
+    cin>>number1;
+    cout<<"Enter number2 ";
+    cin>>number2;
+    if(number1>number2){
+        lowest = number2;
+    }
+    else{
+        lowest = number1;
+    }
+    for(int i= 1; i <= lowest; i++){
+        int rem1 = number1%i;
+        int rem2 = number2%i;
+        if(rem1==rem2){
+            GCD = i;
+        }
+    }
+    cout<< GCD;
+
+    return 0;
+}

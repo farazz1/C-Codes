@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+void execute(string name,int tickets,double gross,double percent,double donated,double net){
+    cout<<"Movie Name: ……………………………..."<<name<<endl;
+    cout<<"Number of Tickets Sold: .........................."<<tickets<<endl;
+    cout<<"Gross Amount: ......................................... $ "<<gross<<endl;
+    cout<<"Percentage of Gross Amount Donated:"<<percent<<"%<<"<<endl;
+    cout<<"Amount Donated: ................................... $"<<donated<<endl;
+    cout<<"Net Sale: ................................................... $"<<net<<endl;
+    
+    
+}
+
+int main() {
+    string movie;
+    int adults,children,tickets;
+    double adultp,childp,donate,donated,gross,net;
+    cout<<"Enter the movie name: "<<endl;
+    getline(cin,movie);
+    cout<<"enter the number of adults: "<<endl;
+    cin>>adults;
+    cout<<"Enter the number of children: "<<endl;
+    cin>>children;
+    tickets = children + adults;
+    cout<<"Enter the ticket price of one adult ticket: "<<endl;
+    cin>>adultp;
+    cout<<"enter the price of one child ticket: "<<endl;
+    cin>>childp;
+    gross = (adults*adultp) + (children*childp);
+    cout<<"how many percent would you like to donate? "<<endl;
+    cin>>donate;
+    donated = (donate*gross)/100;
+    net = gross - donated;
+    gross = round(gross*100)/100;
+    donate = round(donate*100)/100;
+    donated = round(donated*100)/100;
+    net = round(net*100)/100;
+    execute(movie,tickets,gross,donate,donated,net);
+    
+    return 0;
+}

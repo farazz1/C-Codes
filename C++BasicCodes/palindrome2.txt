@@ -1,0 +1,24 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using std::cout;
+using std::cin;
+int main() {
+  int org,number,rem,newnum;
+    cout << "enter your number: ";
+    cin >> number;
+    newnum = 0;
+    org = number;
+    while(number!=0){
+        rem = number%10;
+        number = number/10;
+        newnum = (newnum*10) + rem;
+    }
+    if(org == newnum){
+        cout<<"Number is a pelindrome!";
+    }
+    else{
+        cout<<"Number is not a pelindrome!";
+    }
+
+    return 0;
+}

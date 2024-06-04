@@ -1,0 +1,25 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+int main(){
+    int num1 = 1, limit,var,sum{0},counter{0};
+    cout << "Enter the limit";
+    cin >> limit;
+    cout << endl;
+    while (counter++< limit) {
+        for (unsigned int i{1}; i < counter + 1; i++) {
+            if (i == counter) {
+                sum = sum + num1;
+                cout << num1 << " " << "= " << sum;
+            }   
+            else {
+                cout << num1 << " " << "+ ";
+                sum = sum + num1;
+                num1++;
+            }
+        }
+        cout << endl;
+        sum = 0;
+        num1 = 1;
+    }
+}

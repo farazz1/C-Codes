@@ -1,0 +1,106 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <string>
+using namespace std;
+
+void wordcounter(string s){
+    string s1 = s;
+    int size = s1.size();
+    int count{0};
+    for(int i=0;i<size;i++){
+        if(s1[i]==' '){
+            count++;
+        }
+    }
+    cout<<"the number of words in this are: "<<count+1<<endl;
+}
+void sentences(string s){
+    string s1 = s;
+    int size = s1.size();
+    int count{0};
+    for(int i=0;i<size;i++){
+        if(s1[i]=='.'){
+            count++;
+        }
+    }
+    cout<<"the number of sentences in this are: "<<count<<endl;   
+}
+void spaces(string s){
+    string s1 = s;
+    int size = s1.size();
+    int count{0};
+    for(int i=0;i<size;i++){
+        if(s1[i]==' '){
+            count++;
+        }
+    }
+    cout<<"the number of spaces in this are: "<<count<<endl;   
+}
+void replaceWord(string& inputString) {
+    string targetWord, replacementWord;
+
+    cout << "Enter the word to replace: ";
+    cin >> targetWord;
+
+    cout << "Enter the replacement word: ";
+    cin >> replacementWord;
+
+    size_t pos = inputString.find(targetWord);
+    while (pos != string::npos) {
+        inputString.replace(pos, targetWord.length(), replacementWord);
+        pos = inputString.find(targetWord, pos + replacementWord.length());
+    }
+
+    cout << "Modified string: " << inputString << endl;
+}
+void Articles(const string& inputString) {
+    int count = 0;
+    size_t pos = 0;
+
+    while ((pos = inputString.find_first_of(" \t\n", pos)) != string::npos) {
+        string word = inputString.substr(pos + 1, 3);
+        if (word == "a" || word == "an" || word == "the") {
+            count++;
+        }
+        pos++;
+    }
+
+    cout<<"The number of articles in this are: "<<count<<endl;
+}
+void execute(string s){
+    string string1 = s;
+    int choice{1},number{0};
+    while(choice == 1){
+        cout<<"Enter 1 for word counter: \n"<<"enter 2 for sentences counter: \n"<<"Enter 3 for space counter: \n"<<"Enter 4 for replacing a word: \n"<<"Enter 5 for Articles: \n";
+        cin>>number;
+        if(number == 1){
+         wordcounter(string1);   
+        }
+        else if(number == 2){
+            sentences(string1);
+        }
+        else if(number == 3){
+            spaces(string1);
+        }
+        else if(number == 4){
+            replaceWord(string1);
+        }
+        else if(number == 5){
+            Articles(string1);
+        }
+        else{
+            cout<<"wrong option!"<<endl;
+        }
+        cout<<"to continue press 1 and to leave press 0: "<<endl;
+        cin>>choice;
+    }
+    
+}
+
+int main() {
+    string string1;
+    cout<<"Enter: ";
+    getline(cin,string1);
+    execute(string1);
+    return 0;
+}

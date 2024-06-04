@@ -1,0 +1,57 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+string removeX(string str,char X){
+
+	if (str.length() == 0) {
+		return "";
+	}
+
+
+	if (str[0] == X) {
+
+
+		return removeX(str.substr(1), X);
+	}
+
+
+	return str[0]
+		+ removeX(str.substr(1), X);
+}
+int isAnagram(string s1, string s2){
+    string string1 = s1;
+    string string2 = s2;
+    if(string1.size() != string2.size()){
+        cout<<"Is not an anagram!";
+        return 0;
+    }
+    sort(string1.begin(),string1.end());
+    sort(string2.begin(),string2.end());
+    int size = string1.size();
+    for(int i=0;i<size;i++){
+        if(string1[i] =! string2[i]){
+            cout<<"Not a anagram!";
+            return 0;
+        }
+    }
+    cout<<"It is an anagram";
+}
+
+int main() {
+    string s1,s2;
+    cout<<"Enter both strings in lowercase!\n";
+    cout<<"Enter string 1: ";
+    getline(cin,s1);
+    cout<<"Enter string 2: ";
+    getline(cin,s2);
+    
+    char X = ' ';
+    s1 = removeX(s1,X);
+    s2 = removeX(s2,X);
+    isAnagram(s1,s2);
+    
+    return 0;
+}

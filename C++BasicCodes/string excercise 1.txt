@@ -1,0 +1,82 @@
+//Counting lenght of string
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    char str[100], *pt;
+    int count = 0;
+    cout << "Enter Any string: ";
+    cin>>str;
+    pt = str;
+    
+    while (*pt != '\0') {
+        count++;
+        pt++;
+    }
+    cout << "\nLength of String : " << count;
+    
+    return 0;
+}
+
+
+
+
+// part2
+
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int main() {
+    char str[100], *pt;
+    char str2[100];
+    int count = 0;
+    cout << "Enter Any string: ";
+    cin.getline(str,100);
+    
+    pt = str;
+    while (*pt != '\0') {
+        count++;
+        pt++;
+    }
+     for(int i=0;i<count;i++){
+         str2[i] = str[i];
+    }
+    
+    cout<<str2;
+    
+    return 0;
+}
+
+
+//counting vowels part3
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    char str[100], *pt;
+    int count = 0;
+    int vowel = 0;
+    cout << "Enter Any string: ";
+    cin.getline(str,100);
+    pt = str;
+    
+    while (*pt != '\0') {
+        count++;
+        pt++;
+    }
+    
+    for(int i=0;i<count;i++){
+        if(str[i]=='a'|| str[i]=='e'||str[i]=='i'||str[i]=='o'||str[i]=='u'
+        ||str[i]=='A'||str[i]=='E'||str[i]=='I'||str[i]=='O' ||str[i]=='U')
+        {
+		    vowel++;
+        }
+    }
+    cout << "\nnumber of vowels in this are : " << vowel;
+    
+    return 0;
+}

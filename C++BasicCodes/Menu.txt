@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <array>
+using namespace std;
+
+ struct menuItemType{
+     string menuItem;
+     double menuPrice;
+};
+
+int main() {
+    menuItemType array1[8];
+    int choice[15];
+    int count{0},num;
+    double total,tax;
+    array1[0] = {"Plain Egg",1.45};
+    array1[1] = {"Bacon and Egg",2.45};
+    array1[2] = {"Muffin",0.99};
+    array1[3] = {"French Toast",1.99};
+    array1[4] = {"Fruit Basket",2.49};
+    array1[5] = {"Plain Egg",0.69};
+    array1[6] = {"Coffee",0.50};
+    array1[7] = {"Tea",0.75};
+    for(int i=0;i<8;i++){
+         cout<<i<<" "<<array1[i].menuItem<<" "<<array1[i].menuPrice<<endl;
+     }
+     cout<<endl;
+    int finished = 1;
+    while(finished == 1){
+        cout<<"Enter the item number you want to choose: ";
+        cin>>num;
+        choice[count] = num;
+        count++;
+        cout<<"Do you wanna continue?: yes = 1, no = 0 ";
+        cin>>finished;
+    }
+    for(int i=0;i<count;i++){
+        total = total + array1[choice[i]].menuPrice;
+    }
+    tax = (total*5)/100;
+    cout<<endl;
+    cout<<"Welcome to Johnny's Restaurant"<<endl;
+    for(int i=0;i<count;i++){
+        cout<<i<<" "<<array1[choice[i]].menuItem<<" "<<array1[choice[i]].menuPrice<<endl;
+    }
+    cout<<"Tax $"<<tax<<endl;
+    total = total + tax;
+    cout<<"amount due $"<<total;
+
+    return 0;
+}

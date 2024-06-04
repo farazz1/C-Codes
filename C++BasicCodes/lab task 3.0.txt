@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    string input;
+    cout << "Enter student name and 5 test scores separated by spaces: ";
+    getline(cin, input);
+
+    
+    stringstream ss(input);
+    
+    string name;
+    double score, total = 0, average;
+    double array[5];
+
+    
+    ss >> name;
+
+    
+    for (int i = 0; i < 5; i++) {
+        ss >> score;
+        score = round(score * 100) / 100;
+        array[i] = score;
+    }
+
+    
+    for (int i = 0; i < 5; i++) {
+        total = total + array[i];
+    }
+    average = total / 5;
+    average = round(average * 100) / 100;
+
+    
+    cout << endl;
+    cout << "Student Name: " << name << endl;
+    cout << "Test scores: ";
+    for (int i = 0; i < 5; i++) {
+        cout << array[i] << " ";
+    }
+    cout << endl;
+    cout << "The total average is: " << average;
+
+    return 0;
+}

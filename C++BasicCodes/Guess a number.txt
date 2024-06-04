@@ -1,0 +1,39 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+int main() {
+    int count,guess;
+    char cont = 'Y';
+    while(cont != 'N' ){
+        srand( static_cast<unsigned int>(time(0)));
+        int choice = rand()%100;
+        while(count<=5){
+           cout<<"Enter your guess: ";
+           cin>>guess;
+           if(guess==choice){
+               cout<<"you guessed the right number!"<<"\n";
+               break;
+           }
+           else{
+               cout<<"You entered the wrong number!"<<"\n";
+               if(guess>choice){
+                   cout<<"Entered number is higher"<<"\n";
+               }
+               else{
+                   cout<<"Entered number is lower"<<"\n";
+               }
+           }
+           count =+ 1;
+        }
+        cout<< "Do you wanna continue?"<<"Enter capital Y/N";
+        cin>>cont;
+    }
+
+   
+    
+    
+    cout<<endl;
+
+}

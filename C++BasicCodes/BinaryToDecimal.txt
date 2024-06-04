@@ -1,0 +1,20 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <cmath>
+using std::cout;
+using std::cin;
+
+int main() {
+   int rem,binary,dec;
+   cout << "Enter binary number: ";
+   cin >> binary;
+   int i = 0;
+   while(binary != 0){
+       rem = binary%10;
+       dec += rem * pow(2, i);
+       binary = binary/10;
+       i += 1;
+       }
+   cout << dec;
+    return 0;
+}

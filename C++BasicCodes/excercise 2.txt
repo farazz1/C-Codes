@@ -1,0 +1,26 @@
+#include <iostream>
+#include <ctime>
+using std::cout;
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int main(int argc, char** argv) {
+	
+	time_t present_time; // time_t is the data type and present_time is the variable
+	present_time = time(NULL);
+	cout << present_time << "Seconds has passed since 00:00 GMT, Jan 1,1970";
+	int a = present_time;
+	cout << a;
+	int currentsec = a%60;  //for 1 minute clock
+	cout << "\n The current sec in your clock: " << currentsec;
+	int currentmin = a/60;
+	currentmin = currentmin%60;
+	cout << "\n The current minute in your clock is: " << currentmin;
+	int currenthour = a/3600;
+	currenthour = currenthour%24; // gmt
+	currenthour = currenthour + 5;
+	cout << "\n The current hour in your clock is:" << currenthour;
+	cout << "\n The time is: " << currenthour << " hours " << currentmin << " mins " << currentsec << " secs ";
+	
+	
+	return 0;
+}

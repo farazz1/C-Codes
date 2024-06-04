@@ -1,0 +1,43 @@
+#include <iostream>
+
+using namespace std;
+
+void towerOfHanoiIterative(int numDisks, char source, char target, char auxiliary) {
+    int totalMoves = (1 << numDisks) - 1;
+
+    if (numDisks % 2 == 0) {
+        char temp = auxiliary;
+        auxiliary = target;
+        target = temp;
+    }
+
+    for (int move = 1; move <= totalMoves; ++move) {
+        if (move % 3 == 1) {
+            cout << "Move disk 1 from " << source << " to " << target << endl;
+        } else if (move % 3 == 2) {
+            cout << "Move disk 2 from " << source << " to " << auxiliary << endl;
+        } else {
+            cout << "Move disk 1 from " << target << " to " << auxiliary << endl;
+        }
+
+        if (move % 3 == 0) {
+            char temp = source;
+            source = auxiliary;
+            auxiliary = temp;
+        } else {
+            char temp = target;
+            target = auxiliary;
+            auxiliary = temp;
+        }
+    }
+}
+
+int main() {
+    int numDisks;
+    cout << "Enter the number of disks: ";
+    cin >> numDisks;
+
+    towerOfHanoiIterative(numDisks, 'A', 'C', 'B');
+
+    return 0;
+}

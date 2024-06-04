@@ -1,0 +1,36 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string removeX(string str,char X){
+
+	if (str.length() == 0) {
+		return "";
+	}
+
+
+	if (str[0] == X) {
+
+
+		return removeX(str.substr(1), X);
+	}
+
+
+	return str[0]
+		+ removeX(str.substr(1), X);
+}
+
+int main()
+{
+	string str;
+	cout<<"Enter a string? ";
+	cin>>str;
+
+	char X = 'x';
+
+	// Function Call
+	str = removeX(str, X);
+	cout << str;
+	return 0;
+}

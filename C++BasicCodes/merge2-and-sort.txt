@@ -1,0 +1,55 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <cmath>
+#include <array>
+using namespace std;
+
+int main() {
+    int total, size1, size2,a,b,temp;
+    cout<<"enter size of array 1 ";
+    cin>>a;
+    int array1[a];
+    cout<<"enter size of array 2 ";
+    cin>>b;
+    int array2[b];
+    for(int i=0;i<a;i++){
+        cout<<"Enter numbers for first array ";
+        cin>>array1[i];
+    }
+    for(int i=0;i<b;i++){
+        cout<<"Enter numbers for second array ";
+        cin>>array2[i];
+    }
+    int c = a+b;
+    int array3[c];
+    for(int i=0;i<c;i++){
+        array3[i] = 0;
+    }
+    for(int i=0;i<a;i++){
+        array3[i] = array1[i];
+    }
+    for(int i=0;i<b;i++){
+        array3[i+a] = array2[i];
+    }
+    for(int i=0;i<c;i++){
+        cout<<array3[i]<<" ";
+    }
+    cout<<"\n";
+    cout<<"\n";
+      for (int i = 0; i < c; i++) {
+        for (int j = i + 1; j < c; j++) {
+            if (array3[i] > array3[j]) {
+                temp = array3[i];
+                array3[i] = array3[j];
+                array3[j] = temp;
+            }
+        }
+    }
+    cout<<"sorted array"<<"\n";
+    for (int i = 0; i < c; i++){
+        cout << array3[i];
+    cout << endl;
+    }
+
+    return 0;
+}

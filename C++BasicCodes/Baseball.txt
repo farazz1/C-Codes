@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <array>
+using namespace std;
+
+struct baseball{
+    string name;
+    int runs;
+    int hits;
+};
+void update(baseball array[10]){
+    int index;
+    cout<<"what index would you wanna update or add?";
+    cin>>index;
+    cout<<"update name: "<<endl;
+    cin>>array[index].name;
+    cout<<"update home runs: "<<endl;
+    cin>>array[index].runs;
+    cout<<"update the hits: "<<endl;
+    cin>>array[index].hits;
+    
+}
+void search(baseball array[10]){
+    string name;
+    cout<<"Name to search? "<<endl;
+    cin>>name;
+    for(int i=0;i<10;i++){
+        if(array[i].name == name){
+            cout<<"found on index "<<i<<endl;
+            break;
+        }
+    }
+}
+
+int main() {
+    baseball array[10];
+
+
+    int choice;
+    int cont = 1;
+    while(cont == 1){
+        cout<<"to add or update, input 1"<<endl;
+        cout<<"to search player's name index, enter 2"<<endl;
+        cin>>choice;
+        if(choice == 1){
+            update(array);
+        }
+        else if(choice == 2){
+            search(array);
+        }
+        else{
+            cout<<"Wrong choice"<<endl;
+        }
+        cout<<"Do you wanna continue? yes =1,no = 0"<<endl;
+        cin>>cont;
+    }
+
+    return 0;
+}

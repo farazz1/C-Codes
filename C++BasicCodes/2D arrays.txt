@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int  r1, c1, r2, c2;
+
+    cout << "Enter rows and columns for first matrix: ";
+    cin >> r1 >> c1;
+    cout << "Enter rows and columns for second matrix: ";
+    cin >> r2 >> c2;
+
+   
+    while (c1!=r2)
+    {
+        cout << "Error! column of first matrix not equal to row of second.";
+
+        cout << "Enter rows and columns for first matrix: ";
+        cin >> r1 >> c1;
+
+        cout << "Enter rows and columns for second matrix: ";
+        cin >> r2 >> c2;
+    }
+    int matrix1[r1][c1]{};
+    int matrix2[r2][c2]{};
+    
+    cout << "enter elements of matrix1: "<<endl;
+    for(int i=0;i<r1;++i){
+        for(int j = 0;j<c1;++j){
+            cin>>matrix1[i][j];
+        }
+    }
+    cout << "enter elements of matrix2: "<<endl;
+    for(int i=0;i<r2;++i){
+        for(int j = 0;j<c2;++j){
+            cin>>matrix2[i][j];
+        }
+    }
+    cout<<"the numbers of matrix 1: "<<endl;
+    for(int i=0;i<r1;++i){
+        for(int j=0;j<c1;++j){
+            cout<<"matrix1["<<i<<"] ["<<j<<"j: "<<matrix1[i][j]<<endl;
+        }
+    }
+      cout<<"the numbers of matrix 2: "<<endl;
+    for(int i=0;i<r2;++i){
+        for(int j=0;j<c2;++j){
+            cout<<"matrix2["<<i<<"] ["<<j<<"j: "<<matrix2[i][j]<<endl;
+        }
+    }
+    char answer;
+    cout<<"Do you want to add the two matrixes?:y/n ";
+    cin>>answer;
+    while(answer=='y'){
+        int m3[r1][c1];
+        if(r1==r2 && c1==c2){
+            for(int i=0;i<r1;i++){
+                for(int j=0;j<c1;j++){
+	  		m3[i][j]=matrix1[i][j]+matrix2[i][j];
+		   }
+	    } 
+	    cout<<"\nThe resultant Matrix is:\n"<<endl;
+
+	   for(int i=0;i<r1;i++){
+	       for(int j=0;j<c1;j++){
+	           cout<<"m3["<<i<<"] ["<<j<<"j: "<<m3[i][j]<<endl;
+		}
+		
+	  } 
+        }
+    }
+    int multi[r1][c2]{};
+    for(int i = 0; i < r1; ++i){
+        for(int j = 0; j < c2; ++j){
+            for(int k = 0; k < c1; ++k){
+                multi[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+        }
+    }
+      cout<<"the numbers of multi: "<<endl;
+    for(int i=0;i<r1;++i){
+        for(int j=0;j<c2;++j){
+            cout<<"multi["<<i<<"] ["<<j<<"]: "<<multi[i][j]<<endl;
+        }
+    }
+    
+    return 0;
+}

@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int grades;
+    cout<<"enter grades? ";
+    cin>>grades;
+    cout<<(grades>=60?"Passed!":"failed!");
+
+    return 0;
+}

@@ -1,0 +1,25 @@
+#include <iostream>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+#include <cmath>;
+int main(int argc, char** argv) {
+	double x1,x2,y1,y2,difx,dify,sq1,sq2,total,ans;
+	std::cout << "Enter x1\n";
+	std::cin >> x1;
+	std::cout << "Enter x2\n";
+	std::cin >> x2;
+	std::cout << "Enter y1\n";
+	std::cin >> y1;
+	std::cout << "Enter xy2\n";
+	std::cin >> y2;
+	difx = x2-x1;
+	dify = y2-y1;
+	sq1 = pow(difx, 2);
+	sq2 = pow(dify, 2);
+	total = sq1 + sq2;
+	ans = sqrt(total);
+	std::cout << "Answer is: " << ans << std::endl;
+	
+	
+	return 0;
+}

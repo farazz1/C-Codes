@@ -1,0 +1,21 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using std::cout;
+using std::cin;
+int main() {
+    int num, first, second, third, fourth, rem, quotient;
+    cout << "Enter 4 digit numbers ";
+    cin >> num;
+    quotient = num/100;
+    first = quotient/10;
+    second = quotient%10;
+    rem = num%100;
+    third = rem/10;
+    fourth = rem%10;
+    if (first==fourth && second==third)
+    cout << " Number is a palindrome!";
+    else
+    cout << "number is not a palindrome";
+
+    return 0;
+}

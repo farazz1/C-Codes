@@ -1,0 +1,15 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int N{0},sum{0};
+    while(N>=0){
+        sum += N;
+        cout<<"Enter integer? Enter negative to exit: ";
+        cin>>N;
+        
+    }
+    cout<<"The total sum is "<<sum<<endl;
+
+    return 0;
+}

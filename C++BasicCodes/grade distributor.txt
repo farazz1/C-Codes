@@ -1,0 +1,57 @@
+#include <iostream>
+#include <array>
+#include <iomanip>
+using namespace std;
+int main(){
+    int number;
+    string count100{""},count90{""},count80{""},count70{""},count60{""},count50{""},count40{""},count30{""},count20{""},count10{""},count0{""},v;
+    array<int,11>grades{59,69,78,80,91,55,100,49,92,10,22};
+    for (size_t i{0};i<grades.size();i++){
+        number = grades[i];
+        if (number == 100){
+            count100+="*";
+        }
+        else if(number < 100 && number > 89){
+            count90+="*";
+        }
+        else if(number < 90 && number > 79){
+            count80+="*";
+        }
+        else if(number < 80 && number > 69){
+            count70+="*";
+        }
+        else if(number < 70 && number > 59){
+            count60+="*";
+        }
+        else if(number < 60 && number > 49) {
+            count50 += "*";
+        }
+        else if(number < 50 && number > 39){
+            count40+="*";
+        }
+        else if(number < 40 && number > 29){
+            count30+="*";
+        }
+        else if(number < 30 && number > 19){
+            count20+="*";
+        }
+        else if(number < 20 && number > 9){
+            count10+="*";
+        }
+        else {
+            count0+="*";
+        }
+    }
+    array<string,11>gradescount{count0,count10,count20,count30,count40,count50,count60,count70,count80,count90,count100};
+    for(size_t i{0};i<gradescount.size();i++){
+        if(10==i){
+            cout <<"100: ";
+            cout << right<< setw(5)<<gradescount[i]<<endl;
+        }
+        else {
+            cout <<i * 10<< "-" << (i*10) + 9<<":";
+            cout << right<< setw(5)<<gradescount[i]<<endl;
+        }
+    }
+
+}

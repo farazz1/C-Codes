@@ -1,0 +1,48 @@
+
+#include <iostream>
+#include <array>
+#include <ctime>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    char key[10]{'D','B','D','C','C','D','A','E','A','D'};
+    char A[7][10];
+    srand(time(0));
+
+    for (int r = 0; r<7; r++){
+        for (int c = 0; c<10; c++){
+            A[r][c] = rand() % 5+65;
+        }
+    }
+    for (int r = 0; r<7; r++) {
+        cout<<"student"<<r+1<<"= ";
+        for (int c = 0; c<10; c++){
+            cout << A[r][c] << " ";
+            
+        }
+        cout<<"\n";
+    }
+    for(int r=0;r<7;r++){
+        for(int c=0;c<10;c++){
+            if(A[r][c]==key[r]){
+                A[r][c] = 'T';
+            }
+            else{
+                A[r][c] = 'F';
+            }
+        }
+    }
+    cout<<"\n"<<"Answers"<<"\n";
+    for (int r = 0; r<7; r++) {
+            cout<<"student"<<r+1<<"= ";
+            for (int c = 0; c<10; c++){
+                cout << A[r][c] << " ";
+                
+            }
+            cout<<"\n";
+        }
+
+    return 0;
+}

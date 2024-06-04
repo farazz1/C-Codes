@@ -1,0 +1,150 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main(){
+    int status;
+    double income,tax;
+    cout << "Enter the status for taxes"<<endl;
+    cout << "0 - SINGLE FILERS\n1- MARRIED FILES JOINTLY\n2 - MARRIED FILERS SEPERATELY\n3 - HEAD OF HOUSEHOLD"<<endl;
+    cin >> status;
+    cout << "Enter your income: ";
+    cin >> income;
+    if (status == 0) {
+        if (income <= 8350) {
+            tax = income * 0.1;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 33950) {
+            tax = income * 0.15;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 82250) {
+            tax = income * 0.25;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 171550) {
+            tax = income * 0.28;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 372950) {
+            tax = income * 0.33;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else {
+            tax = income * 0.35;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        }
+    }
+    else if(status == 1){
+        if (income <=16700){
+            tax = income * 0.1;
+            income = income - tax;
+            cout << "Take home salary is: " << income<< endl;
+            cout << "Tax is: " << tax << endl;
+        }
+        else if (income <= 67900){
+            tax = income * 0.15;
+            income = income - tax;
+            cout << "Take home salary is: " << income<< endl;
+            cout << "Tax is: " << tax << endl;
+        }
+        else if(income <= 137050){
+            tax = income * 0.25;
+            income = income - tax;
+            cout << "Take home salary is: " << income<< endl;
+            cout << "Tax is: " << tax << endl;
+        }
+        else if (income <= 208850){
+            tax = income * 0.28;
+            income = income - tax;
+            cout << "Take home salary is: " << income<< endl;
+            cout << "Tax is: " << tax << endl;
+        }
+        else if (income <= 372950){
+            tax = income * 0.33;
+            income = income - tax;
+            cout << "Take home salary is: " << income<< endl;
+            cout << "Tax is: " << tax << endl;
+        }
+        else {
+            tax = income * 0.35;
+            income = income - tax;
+            cout << "Take home salary is: " << income<< endl;
+            cout << "Tax is: " << tax << endl;
+        }
+    }
+    else if(status == 2){
+        if (income <= 8350) {
+            tax = income * 0.1;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 33950) {
+            tax = income * 0.15;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 68525) {
+            tax = income * 0.25;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 104425) {
+            tax = income * 0.28;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 186475) {
+            tax = income * 0.33;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else {
+            tax = income * 0.35;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        }
+    }
+    else if (status == 3){
+        if (income <= 11950) {
+            tax = income * 0.1;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 45500) {
+            tax = income * 0.15;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 117450) {
+            tax = income * 0.25;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 190200) {
+            tax = income * 0.28;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else if (income <= 372950) {
+            tax = income * 0.33;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        } else {
+            tax = income * 0.35;
+            income = income - tax;
+            cout << "Take home salary is: " << income << endl;
+            cout << "Tax is: " << tax << endl;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,13 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+int main() {
+    srand( static_cast<unsigned int>(time(0)));
+    int choice = rand()%100;
+    cout << choice;
+    
+    cout<<endl;
+
+}

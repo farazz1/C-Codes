@@ -1,0 +1,21 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+
+double sumTo(int n){
+    double m = n;
+    if (m <= 1){
+        return m; 
+    }
+    else{
+        return 1/m + sumTo(m - 1);
+    }
+}
+int main() {
+    double n;
+    cout<<"Enter a value ";
+    cin>>n;
+    cout<<sumTo(n);
+
+    return 0;
+}
